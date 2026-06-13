@@ -1,0 +1,88 @@
+<nav-bar title="仓库详情" />
+
+<page-container>
+<view class="container">
+  <!-- 仓库基本信息 -->
+  <view wx:if="{{repoInfo}}" class="repo-info">
+    <text class="repo-name">{{repoInfo.full_name}}</text>
+    <text class="repo-desc">{{repoInfo.description || '暂无描述'}}</text>
+    <view class="repo-meta">
+      <view class="meta-item" wx:if="{{repoInfo.language}}">
+        <text class="meta-value">{{repoInfo.language}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">Star:</text>
+        <text class="meta-value">{{repoInfo.stargazers_count}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">Fork:</text>
+        <text class="meta-value">{{repoInfo.forks_count}}</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-label">更新:</text>
+        <text class="meta-value">{{repoInfo.updated_at}}</text>
+      </view>
+    </view>
+    <view class="star-btn-container">
+      <button 
+        class="star-btn {{repoInfo.starred ? 'starred' : ''}}" 
+        bindtap="toggleStar">
+        {{repoInfo.starred ? '已收藏' : '收藏'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 路径导航 -->
+  <view wx:if="{{breadcrumbs.length > 0}}" class="breadcrumb">
+    <view 
+      wx:for="{{breadcrumbs}}" 
+      wx:key="index" 
+      class="breadcrumb-item"
+      bindtap="goToPath" 
+      data-path="{{item.path}}"
+      data-index="{{index}}">
+      <text class="breadcrumb-text">{{item.name}}</text>
+      <text class="breadcrumb-separator" wx:if="{{index < breadcrumbs.length - 1}}"> / </text>
+    </view>
+  </view>
+
+  <!-- 文件列表 -->
+  <view class="file-list">
+    <view wx:if="{{isLoading}}" class="loading">
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <view wx:elif="{{files.length === 0 && dirs.length === 0}}" class="empty">
+      <text class="empty-text">目录为空</text>
+    </view>
+
+    <view wx:else class="file-items">
+      <!-- 目录 -->
+      <view 
+        wx:for="{{dirs}}" 
+        wx:key="sha" 
+        class="file-item dir-item"
+        bindtap="goToDir" 
+        data-file="{{item}}">
+        <text class="file-icon">📁</text>
+        <text class="file-name">{{item.name}}</text>
+        <text class="file-right">></text>
+      </view>
+
+      <!-- 文件 -->
+      <view 
+        wx:for="{{files}}" 
+        wx:key="sha" 
+        class="file-item file-item"
+        bindtap="goToFile" 
+        data-file="{{item}}">
+        <text class="file-icon">📄</text>
+        <text class="file-name">{{item.name}}</text>
+        <text class="file-size">{{item.size}} B</text>
+      </view>
+    </view>
+  </view>
+<view class="" style="height: 200rpx;"></view>
+
+</view>
+</page-container>

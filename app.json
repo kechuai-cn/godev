@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/search/search",
+    "pages/starred/starred",
+    "pages/repo/repo",
+    "pages/file/file",
+    "pages/auth/auth"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#24292e",
+    "navigationBarTitleText": "Git 仓库浏览",
+    "navigationBarTextStyle": "white",
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {
+    "nav-bar": "./components/nav-bar/index",
+    "page-container": "./components/page-container/index"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

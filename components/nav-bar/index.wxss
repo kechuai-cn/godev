@@ -1,0 +1,62 @@
+.pod {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 999;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.left_area {
+  flex: none;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.back {
+  flex: none;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-back {
+  flex: none;
+  font-size: 20px;
+  margin-right: 16px;
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.nav-right {
+  flex: none;
+  font-size: 14px;
+  color: #007aff;
+  margin-right: 16rpx;
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

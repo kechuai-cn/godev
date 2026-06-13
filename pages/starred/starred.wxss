@@ -1,0 +1,147 @@
+.container {
+  background-color: #f5f5f5;
+  min-height: 100%;
+}
+
+/* 未授权提示 */
+.auth-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+}
+
+.tip-text {
+  font-size: 28rpx;
+  color: #6a737d;
+  margin-bottom: 32rpx;
+}
+
+.btn-auth {
+  background-color: #24292e;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 16rpx 48rpx;
+  border-radius: 8rpx;
+}
+
+/* 收藏容器 */
+.starred-container {
+  padding: 20rpx;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #6a737d;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #6a737d;
+}
+
+/* 仓库列表 */
+.repo-list {
+  padding: 20rpx 0;
+}
+
+.repo-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 32rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.repo-item:active {
+  transform: scale(0.98);
+}
+
+.repo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.repo-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #24292e;
+  flex: 1;
+}
+
+.repo-lang {
+  font-size: 24rpx;
+  color: #6a737d;
+  background-color: #f1f3f4;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.repo-desc {
+  font-size: 26rpx;
+  color: #586069;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+  word-break: break-all;
+}
+
+.repo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repo-stats {
+  display: flex;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  margin-right: 32rpx;
+}
+
+.stat-icon {
+  font-size: 24rpx;
+  margin-right: 8rpx;
+}
+
+.stat-text {
+  font-size: 24rpx;
+  color: #6a737d;
+}
+
+.unstar-btn {
+  background-color: #fef2f2;
+  color: #d73a49;
+  border: 2rpx solid #fcb2b7;
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #6a737d;
+  font-size: 24rpx;
+}

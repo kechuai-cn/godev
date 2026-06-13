@@ -1,0 +1,6 @@
+<scroll-view class="pod" enable-passive refresher-enabled="{{refreshable}}" scroll-y refresher-triggered="{{isRefreshing}}"
+  bindrefresherrefresh="onPullDownRefresh" bindscrolltolower="onReachBottom">
+
+  <slot></slot>
+
+</scroll-view>

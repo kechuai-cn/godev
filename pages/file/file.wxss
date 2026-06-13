@@ -1,0 +1,176 @@
+.container {
+  background-color: #f5f5f5;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 文件信息 */
+.file-info {
+  background-color: #fff;
+  padding: 24rpx 32rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 20rpx;
+}
+
+.file-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #24292e;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.file-path {
+  font-size: 24rpx;
+  color: #6a737d;
+  display: block;
+  word-break: break-all;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+  flex: 1;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #6a737d;
+}
+
+/* 错误状态 */
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+  flex: 1;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: #d73a49;
+  margin-bottom: 24rpx;
+}
+
+.retry-btn {
+  background-color: #24292e;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 16rpx 48rpx;
+  border-radius: 8rpx;
+}
+
+/* 图片内容 */
+.image-content {
+  flex: 1;
+  background-color: #fff;
+  margin: 0 20rpx 20rpx 20rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 600rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.image-hint {
+  font-size: 24rpx;
+  color: #6a737d;
+  text-align: center;
+}
+
+/* 文件内容 */
+.file-content {
+  flex: 1;
+  background-color: #fff;
+  margin: 0 20rpx 20rpx 20rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.code-scroll {
+  height: 100%;
+}
+
+.code-container {
+  padding: 20rpx 0;
+  background-color: #f6f8fa;
+}
+
+.code-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 32rpx;
+  line-height: 40rpx;
+  font-size: 28rpx;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border-bottom: 2rpx solid transparent;
+}
+
+.code-line:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.line-number {
+  display: inline-block;
+  width: 80rpx;
+  color: #6a737d;
+  text-align: right;
+  margin-right: 24rpx;
+  user-select: none;
+  font-size: 24rpx;
+  padding-top: 10rpx;
+}
+
+.line-content {
+  flex: 1;
+  color: #24292e;
+  padding-top: 10rpx;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 代码高亮样式（基础版，实际项目中可使用更完整的高亮库） */
+.line-content .keyword {
+  color: #d73a49;
+}
+
+.line-content .string {
+  color: #032f62;
+}
+
+.line-content .comment {
+  color: #6a737d;
+}
+
+.line-content .number {
+  color: #005cc5;
+}
+
+.line-content .function {
+  color: #6f42c1;
+}
+
+.line-content .variable {
+  color: #e36209;
+}

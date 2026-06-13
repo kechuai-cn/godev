@@ -1,0 +1,59 @@
+<view class="container">
+  <!-- 未授权提示 -->
+  <view wx:if="{{!isAuth}}" class="auth-tip">
+    <text class="tip-text">请先授权登录</text>
+    <button class="btn-auth" bindtap="goToAuth">去授权</button>
+  </view>
+
+  <!-- 收藏列表 -->
+  <view wx:else class="starred-container">
+    <view wx:if="{{repos.length === 0 && !isLoading}}" class="empty">
+      <text class="empty-text">暂无收藏的仓库</text>
+    </view>
+
+    <view wx:elif="{{isLoading}}" class="loading">
+      <text class="loading-text">加载中...</text>
+    </view>
+
+    <view wx:else class="repo-list">
+      <view 
+        wx:for="{{repos}}" 
+        wx:key="id" 
+        class="repo-item" 
+        bindtap="goToRepo" 
+        data-repo="{{item}}">
+        <view class="repo-header">
+          <text class="repo-name">{{item.full_name}}</text>
+          <text class="repo-lang" wx:if="{{item.language}}">{{item.language}}</text>
+        </view>
+        <text class="repo-desc">{{item.description || '暂无描述'}}</text>
+        <view class="repo-footer">
+          <view class="repo-stats">
+            <view class="stat-item">
+              <text class="stat-icon">⭐</text>
+              <text class="stat-text">{{item.stargazers_count}}</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-icon">🔄</text>
+              <text class="stat-text">{{item.forks_count}}</text>
+            </view>
+          </view>
+          <button 
+            class="unstar-btn" 
+            bindtap="unstarRepo" 
+            data-repo="{{item}}">
+            取消收藏
+          </button>
+        </view>
+      </view>
+
+      <!-- 加载更多 -->
+      <view class="load-more" wx:if="{{hasMore}}">
+        <text class="load-text">加载中...</text>
+      </view>
+      <view class="load-more" wx:else>
+        <text class="load-text">没有更多了</text>
+      </view>
+    </view>
+  </view>
+</view>

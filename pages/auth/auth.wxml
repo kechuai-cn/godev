@@ -1,0 +1,27 @@
+<nav-bar title="授权"></nav-bar>
+
+<view class="container">
+  <view class="header">
+    <text class="title">Git 仓库浏览</text>
+    <text class="subtitle">使用 GitHub Personal Access Token 登录</text>
+  </view>
+  <view class="content">
+    <view class="input-group">
+      <text class="label">Personal Access Token</text>
+      <input class="input" placeholder="请输入 GitHub Personal Access Token" password="{{false}}" bindinput="onInput"
+        value="{{token}}" />
+    </view>
+    <button class="btn-primary" bindtap="onSubmit" disabled="{{!token}}">
+      登录
+    </button>
+    <view class="tip">
+      <text class="tip-text">
+        如何获取 Personal Access Token？
+      </text>
+      <text class="tip-text">访问以下地址查看教程：</text>
+      <text class="tip-link">
+        https://docs.github.com/cn/github/authenticating-to-github/creating-a-personal-access-token
+      </text>
+    </view>
+  </view>
+</view>

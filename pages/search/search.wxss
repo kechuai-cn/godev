@@ -1,0 +1,186 @@
+.container {
+  background-color: #f5f5f5;
+  min-height: 100%;
+}
+
+/* 搜索栏 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.search-input {
+  flex: 1;
+  height: 72rpx;
+  border: 2rpx solid #e1e4e8;
+  border-radius: 8rpx 0 0 8rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+
+
+.search-btn {
+  height: 72rpx;
+  background-color: #24292e;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 0 40rpx;
+  border-radius: 0 8rpx 8rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.search-btn[disabled] {
+  background-color: #d1d5da;
+  color: #959da5;
+}
+
+/* 结果容器 */
+.result-container {
+  padding: 0 20rpx;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #6a737d;
+}
+
+/* 仓库列表 */
+.repo-list {
+  padding: 20rpx 0;
+}
+
+.repo-item {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 32rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.repo-item:active {
+  transform: scale(0.98);
+}
+
+.repo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.repo-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #24292e;
+  flex: 1;
+}
+
+.repo-lang {
+  font-size: 24rpx;
+  color: #6a737d;
+  background-color: #f1f3f4;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.repo-desc {
+  font-size: 26rpx;
+  color: #586069;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+  word-break: break-all;
+}
+
+.repo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.repo-stats {
+  display: flex;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  margin-right: 32rpx;
+}
+
+.stat-icon {
+  font-size: 24rpx;
+  margin-right: 8rpx;
+}
+
+.stat-text {
+  font-size: 24rpx;
+  color: #6a737d;
+}
+
+.star-btn {
+  background-color: #fff;
+  color: #24292e;
+  border: 2rpx solid #e1e4e8;
+  font-size: 24rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 8rpx;
+}
+
+.star-btn.starred {
+  background-color: #fef2f2;
+  color: #d73a49;
+  border-color: #fcb2b7;
+}
+
+/* 空状态 */
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #6a737d;
+}
+
+/* 提示 */
+.hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.hint-text {
+  font-size: 28rpx;
+  color: #6a737d;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #6a737d;
+  font-size: 24rpx;
+}

@@ -1,0 +1,49 @@
+<nav-bar title="文件详情" />
+
+<view class="container">
+  <!-- 文件信息 -->
+  <view class="file-info">
+    <text class="file-name">{{fileName}}</text>
+    <text class="file-path">{{filePath}}</text>
+  </view>
+
+  <!-- 内容加载状态 -->
+  <view wx:if="{{isLoading}}" class="loading">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 图片内容 -->
+  <view wx:elif="{{imageUrl}}" class="image-content">
+    <image 
+      src="{{imageUrl}}" 
+      mode="aspectFit" 
+      class="preview-image" 
+      bindtap="previewFullImage"/>
+    <text class="image-hint">点击图片查看大图</text>
+  </view>
+
+  <!-- 文本内容 -->
+  <view wx:elif="{{content}}" class="file-content">
+    <scroll-view 
+      class="code-scroll" 
+      scroll-y="true" 
+      enable-back-to-top="true"
+      show-scrollbar="true">
+      <view class="code-container">
+        <view 
+          wx:for="{{contentLines}}" 
+          wx:key="index" 
+          class="code-line">
+          <text class="line-number">{{index + 1}}</text>
+          <text class="line-content">{{item}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 加载失败 -->
+  <view wx:else class="error">
+    <text class="error-text">加载失败</text>
+    <button class="retry-btn" bindtap="loadFileContent">重试</button>
+  </view>
+</view>
