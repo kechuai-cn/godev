@@ -1,0 +1,31 @@
+/* pages/git-repos/page.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f6fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.placeholder-icon {
+  font-size: 80rpx;
+  line-height: 1;
+}
+
+.placeholder-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1c1e21;
+}
+
+.placeholder-desc {
+  font-size: 26rpx;
+  color: #888;
+}

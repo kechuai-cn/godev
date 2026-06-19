@@ -1,0 +1,71 @@
+# ============================================================
+# GoDev 微信小程序 .gitignore
+# 适用：原生小程序 + TypeScript + 云开发 + 多平台 + 多人协作
+# ============================================================
+
+# ---- 编译产物 ----
+# TypeScript 编译输出（由 tsconfig.json 的 outDir 生成，勿提交）
+# miniprogram/
+
+# ---- npm 依赖 ----
+node_modules/
+# 小程序 npm 构建产物
+miniprogram_npm/
+# 云函数 npm 依赖（如有云开发）
+cloudfunctions/*/node_modules/
+cloudfunctions/*/package-lock.json
+cloudfunctions/*/yarn.lock
+
+# ---- 微信开发者工具：个人配置 ----
+# ⚠️ 含本地路径、个人 AppID 等隐私信息，切勿提交
+project.private.config.json
+
+# ---- 云开发（CloudBase）----
+# 云函数本地调试缓存
+.cloudfunctions/
+# 云存储本地缓存
+.cloudstorage/
+# CloudBase CLI 本地配置（含密钥）
+.env
+.env.*
+!.env.example
+
+# ---- 多平台/跨端框架产物 ----
+# 如使用 uni-app / Taro 等跨端框架，取消对应注释
+# dist/
+# unpackage/
+# node_modules/ (已上面忽略)
+
+# ---- 编辑器 / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---- 日志 / 缓存 ----
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- 环境变量 / 密钥 ----
+# ⚠️ 不要把令牌、密钥提交到仓库！
+# 提交前请确认这些文件已被忽略
+*.key
+*.pem
+*.p12
+secrets/
+config/local.ts
+config/production.ts
+
+# ---- TypeScript 临时文件 ----
+*.tsbuildinfo
+
+# ---- 系统 / 临时 ----
+.cache/
+.temp/
+.tmp/

@@ -1,0 +1,97 @@
+<!-- pages/home/page.wxml -->
+<view class="container">
+
+  <!-- 顶部 Header -->
+  <view class="header">
+    <view class="header-left">
+      <view class="header-logo">
+        <text class="logo-text">G</text>
+      </view>
+      <view class="header-info">
+        <text class="app-name">GoDev</text>
+        <text class="greeting">{{greeting}}</text>
+      </view>
+    </view>
+    <view class="header-right">
+      <view class="avatar-placeholder">
+        <text>👤</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能入口标题 -->
+  <view class="section-header">
+    <text class="section-title">功能入口</text>
+    <text class="section-subtitle">选择你需要的工具</text>
+  </view>
+
+  <!-- 功能卡片网格 -->
+  <view class="feature-grid">
+    <view
+      class="feature-card"
+      wx:for="{{features}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      data-path="{{item.path}}"
+      bindtap="onFeatureTap"
+    >
+      <!-- 角标 -->
+      <view class="badge" wx:if="{{item.badge}}">
+        <text>{{item.badge}}</text>
+      </view>
+
+      <!-- 图标区域 -->
+      <view class="card-icon-wrap" style="background-color: {{item.bgColor}};">
+        <view class="card-icon-inner">
+          <!-- Git SVG Icon -->
+          <block wx:if="{{item.iconSvg === 'git'}}">
+            <view class="icon-svg icon-git" style="color: {{item.color}};">
+              <text class="icon-char">⑂</text>
+            </view>
+          </block>
+          <!-- Shield SVG Icon -->
+          <block wx:elif="{{item.iconSvg === 'shield'}}">
+            <view class="icon-svg" style="color: {{item.color}};">
+              <text class="icon-char">🔒</text>
+            </view>
+          </block>
+          <!-- Chat SVG Icon -->
+          <block wx:elif="{{item.iconSvg === 'chat'}}">
+            <view class="icon-svg" style="color: {{item.color}};">
+              <text class="icon-char">💬</text>
+            </view>
+          </block>
+          <!-- Image SVG Icon -->
+          <block wx:elif="{{item.iconSvg === 'image'}}">
+            <view class="icon-svg" style="color: {{item.color}};">
+              <text class="icon-char">🎨</text>
+            </view>
+          </block>
+          <!-- Video SVG Icon -->
+          <block wx:elif="{{item.iconSvg === 'video'}}">
+            <view class="icon-svg" style="color: {{item.color}};">
+              <text class="icon-char">🎬</text>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 卡片文字 -->
+      <view class="card-content">
+        <text class="card-title">{{item.title}}</text>
+        <text class="card-desc">{{item.desc}}</text>
+      </view>
+
+      <!-- 箭头 -->
+      <view class="card-arrow" style="color: {{item.color}};">
+        <text>›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部版本信息 -->
+  <view class="footer">
+    <text class="footer-text">GoDev v0.1.0 · 开发者工具集</text>
+  </view>
+
+</view>

@@ -1,0 +1,85 @@
+/* app.wxss — 全局样式 */
+
+/* CSS 变量 */
+page {
+  --color-primary: #1a73e8;
+  --color-primary-light: #e8f0fe;
+  --color-surface: #ffffff;
+  --color-background: #f5f6fa;
+  --color-text-primary: #1c1e21;
+  --color-text-secondary: #606770;
+  --color-text-hint: #b0b3b8;
+  --color-border: #e4e6eb;
+  --color-success: #34a853;
+  --color-warning: #fbbc04;
+  --color-error: #ea4335;
+
+  --radius-sm: 8rpx;
+  --radius-md: 16rpx;
+  --radius-lg: 24rpx;
+  --radius-xl: 32rpx;
+
+  --shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8rpx 40rpx rgba(0, 0, 0, 0.12);
+
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  box-sizing: border-box;
+}
+
+/* 通用卡片 */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 20rpx 40rpx;
+  border: none;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+/* 文本省略 */
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+  color: var(--color-text-hint);
+}
+
+.empty-state text {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+}

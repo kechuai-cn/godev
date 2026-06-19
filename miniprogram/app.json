@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/home/page",
+    "pages/git-repos/page",
+    "pages/git-token/page",
+    "pages/git-repo-detail/page",
+    "pages/git-repo-files/page",
+    "pages/git-file-detail/page"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "GoDev",
+    "navigationBarTextStyle": "black"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

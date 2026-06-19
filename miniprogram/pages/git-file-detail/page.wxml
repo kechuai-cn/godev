@@ -1,0 +1,8 @@
+<!-- pages/git-file-detail/page.wxml -->
+<view class="container">
+  <view class="placeholder">
+    <text class="placeholder-icon">📄</text>
+    <text class="placeholder-title">文件详情</text>
+    <text class="placeholder-desc">功能开发中...</text>
+  </view>
+</view>
