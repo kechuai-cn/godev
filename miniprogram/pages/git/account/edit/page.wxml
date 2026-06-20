@@ -1,9 +1,10 @@
 <!-- pages/git/account/edit/page.wxml -->
 <view class="container">
 
+  <!-- 平台选择 -->
   <view class="form-section">
-    <text class="section-label">平台</text>
-    <picker mode="selector" range="{{platforms}}" range-key="label" value="{{platformIndex}}" bindchange="onPlatformChange">
+    <text class="form-label">平台</text>
+    <picker mode="selector" range="{{platformLabels}}" value="{{platformIndex}}" bindchange="onPlatformChange">
       <view class="form-picker">
         <text>{{platformLabel}}</text>
         <text class="picker-arrow">▸</text>
@@ -11,36 +12,114 @@
     </picker>
   </view>
 
+  <!-- 认证方式 -->
   <view class="form-section">
-    <text class="section-label">备注名称</text>
+    <text class="form-label">认证方式</text>
+    <picker mode="selector" range="{{availableAuthTypeLabels}}" value="{{authTypeIndex}}" bindchange="onAuthTypeChange">
+      <view class="form-picker">
+        <text>{{authTypeLabel}}</text>
+        <text class="picker-arrow">▸</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 备注名称 -->
+  <view class="form-section">
+    <text class="form-label">备注名称</text>
     <input
       class="form-input"
-      placeholder="如：我的 GitHub 账号"
+      placeholder="给这个账号起个名字"
       value="{{name}}"
       bindinput="onNameInput"
     />
   </view>
 
-  <view class="form-section">
-    <text class="section-label">Personal Access Token</text>
+  <!-- Access Token -->
+  <view class="form-section" wx:if="{{showTokenField}}">
+    <text class="form-label">Access Token</text>
+    <view class="input-row">
+      <input
+        class="form-input"
+        placeholder="粘贴你的 Access Token"
+        value="{{token}}"
+        password="{{!showSecret}}"
+        bindinput="onTokenInput"
+      />
+      <view class="secret-btn" bindtap="toggleSecret">
+        <text>{{secretBtnText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户名 + 密码 -->
+  <block wx:if="{{showUserPassFields}}">
+    <view class="form-section">
+      <text class="form-label">用户名</text>
+      <input
+        class="form-input"
+        placeholder="Git 用户名"
+        value="{{username}}"
+        bindinput="onUsernameInput"
+      />
+    </view>
+    <view class="form-section">
+      <text class="form-label">密码</text>
+      <view class="input-row">
+        <input
+          class="form-input"
+          placeholder="密码 / 个人访问令牌"
+          value="{{password}}"
+          password="{{!showSecret}}"
+          bindinput="onPasswordInput"
+        />
+        <view class="secret-btn" bindtap="toggleSecret">
+          <text>{{secretBtnText}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 服务器地址（GitLab） -->
+  <view class="form-section" wx:if="{{showBaseUrlField}}">
+    <text class="form-label">服务器地址</text>
     <input
       class="form-input"
-      placeholder="粘贴你的令牌"
-      value="{{token}}"
-      password="{{!showToken}}"
-      bindinput="onTokenInput"
+      placeholder="https://gitlab.example.com"
+      value="{{baseUrl}}"
+      bindinput="onBaseUrlInput"
     />
-    <view class="toggle-pwd" bindtap="toggleToken">
-      <text>{{showToken ? '隐藏' : '显示'}}</text>
+    <view class="form-tip">
+      <text>私有部署的 GitLab 需要填写服务器地址</text>
+    </view>
+  </view>
+
+  <!-- 测试连接 -->
+  <view class="test-section">
+    <view class="test-btn {{testBtnClass}}" bindtap="onTest">
+      <text wx:if="{{isTesting}}">连接中...</text>
+      <text wx:else>测试连接</text>
+    </view>
+
+    <view class="test-result" wx:if="{{isSuccess || isFail}}">
+      <view class="test-success" wx:if="{{isSuccess}}">
+        <text class="test-icon">✓</text>
+        <text class="test-msg">{{testMessage}}</text>
+        <text class="test-user" wx:if="{{testUsername}}">（{{testUsername}}）</text>
+      </view>
+      <view class="test-fail" wx:if="{{isFail}}">
+        <text class="test-icon">✗</text>
+        <text class="test-msg">{{testMessage}}</text>
+      </view>
     </view>
   </view>
 
   <view class="form-tip">
-    <text>令牌仅存储在本地设备上，不会上传到服务器。</text>
+    <text>凭证仅存储在本地设备上，不会上传到服务器。</text>
   </view>
 
-  <view class="save-btn {{saving ? 'btn-disabled' : ''}}" bindtap="onSave">
-    <text>{{isEdit ? '保存修改' : '添加令牌'}}</text>
+  <!-- 保存按钮 -->
+  <view class="save-btn {{saveBtnClass}}" bindtap="onSave">
+    <text>{{saveBtnText}}</text>
   </view>
 
 </view>

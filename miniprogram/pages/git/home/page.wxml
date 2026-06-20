@@ -1,58 +1,50 @@
-<!--pages/git/home/page.wxml -->
+<!--pages/git/home/page.wxml-->
 <view class="container">
 
-  <!-- 平台切换 Tabs -->
-  <view class="tabs">
-    <view
-      class="tab-item {{item.isActive ? 'tab-active' : ''}}"
-      wx:for="{{tabs}}"
-      wx:key="value"
-      data-platform="{{item.value}}"
-      bindtap="onTabTap"
-    >
-      <text>{{item.label}}</text>
-      <view class="tab-indicator" wx:if="{{item.isActive}}" style="background:{{item.color}};"></view>
-    </view>
-  </view>
-
-  <!-- 用户信息栏（令牌已存在时显示） -->
-  <view class="account-bar" wx:if="{{!isEmpty}}" bindtap="goToAccount">
-    <view class="account-info">
-      <view class="account-avatar" style="background:{{accountColor}};">
+  <!-- 账号栏（顶部第一栏） -->
+  <view class="account-bar" bindtap="goToAccount">
+    <view class="account-left">
+      <view class="account-avatar" style="background:{{accountPlatformColor}};">
         <text>{{accountInitial}}</text>
       </view>
       <view class="account-text">
-        <text class="account-name">{{username || '未验证'}}</text>
-        <text class="account-platform">{{currentPlatformLabel}} · 点击管理令牌</text>
+        <text class="account-name">{{accountName}}</text>
+        <text class="account-platform">{{accountPlatformLabel}}</text>
       </view>
     </view>
-    <text class="account-arrow">›</text>
+    <view class="account-right">
+      <text class="switch-icon">⇄</text>
+      <text class="switch-label">切换</text>
+    </view>
   </view>
 
-  <!-- 搜索栏 -->
-  <view class="search-bar" wx:if="{{!isEmpty}}">
+  <!-- 搜索栏（顶部第二栏） -->
+  <view class="search-bar">
     <view class="search-input-wrap">
       <text class="search-icon">🔍</text>
       <input
         class="search-input"
-        placeholder="搜索仓库..."
+        placeholder="搜索仓库名称、简介..."
         value="{{searchKey}}"
         bindinput="onSearchInput"
       />
+      <view class="search-clear" wx:if="{{searchKey}}" bindtap="onClearSearch">
+        <text>✕</text>
+      </view>
     </view>
   </view>
 
-  <!-- 无令牌状态 -->
+  <!-- 无活跃账号状态 -->
   <view class="empty-state" wx:if="{{isEmpty}}">
     <view class="empty-icon">⑂</view>
-    <text class="empty-title">未配置 {{currentPlatformLabel}} 令牌</text>
-    <text class="empty-desc">配置个人访问令牌后，即可浏览你的仓库</text>
+    <text class="empty-title">未选择账号</text>
+    <text class="empty-desc">请先在账号管理中添加并选择账号</text>
     <view class="empty-btn" bindtap="goToAccount">
-      <text>去配置令牌</text>
+      <text>去管理账号</text>
     </view>
   </view>
 
-  <!-- 加载中 -->
+  <!-- 加载中（首次） -->
   <view class="loading-state" wx:if="{{isLoading}}">
     <view class="loading-spinner"></view>
     <text class="loading-text">加载中...</text>
@@ -75,21 +67,31 @@
       data-repo="{{item}}"
       bindtap="onRepoTap"
     >
+      <!-- 仓库头部：头像 + 名称 + 标签 -->
       <view class="repo-header">
         <view class="repo-avatar" style="background:{{item.avatarBg}};">
           <text class="repo-avatar-text">{{item.avatarText}}</text>
         </view>
         <view class="repo-title-wrap">
-          <text class="repo-name">{{item.name}}</text>
+          <view class="repo-name-row">
+            <text class="repo-name">{{item.name}}</text>
+            <view class="repo-badges">
+              <view class="badge badge-private" wx:if="{{item.private}}">
+                <text>私有</text>
+              </view>
+              <view class="badge badge-archived" wx:if="{{item.archived}}">
+                <text>归档</text>
+              </view>
+            </view>
+          </view>
           <text class="repo-fullname">{{item.fullName}}</text>
-        </view>
-        <view class="repo-private" wx:if="{{item.private}}">
-          <text>私有</text>
         </view>
       </view>
 
+      <!-- 仓库简介 -->
       <text class="repo-desc" wx:if="{{item.description}}">{{item.description}}</text>
 
+      <!-- 仓库元信息 -->
       <view class="repo-meta">
         <view class="meta-item" wx:if="{{item.language}}">
           <view class="lang-dot" style="background:{{item.langColor}};"></view>
@@ -101,6 +103,20 @@
         </view>
         <text class="meta-time">{{item.updatedAtFormatted}}</text>
       </view>
+    </view>
+
+    <!-- 上拉加载状态 -->
+    <view class="load-more" wx:if="{{hasMore}}">
+      <view class="load-more-btn" bindtap="loadMore" wx:if="{{!isLoadingMore}}">
+        <text>加载更多</text>
+      </view>
+      <view class="load-more-loading" wx:if="{{isLoadingMore}}">
+        <view class="loading-spinner-sm"></view>
+        <text>加载中...</text>
+      </view>
+    </view>
+    <view class="load-end" wx:if="{{showLoadEnd}}">
+      <text>— 没有更多了 —</text>
     </view>
   </view>
 

@@ -2,27 +2,53 @@
 <view class="container">
 
   <view class="header">
-    <text class="header-title">令牌管理</text>
-    <text class="header-desc">配置 Git 平台个人访问令牌</text>
+    <text class="header-title">账号管理</text>
+    <text class="header-desc">选择正在使用的账号，或添加新账号</text>
   </view>
 
-  <!-- 令牌列表 -->
-  <view class="token-list" wx:if="{{tokens.length > 0}}">
-    <view class="token-card" wx:for="{{tokens}}" wx:key="id">
+  <!-- 凭证列表 -->
+  <view class="token-list" wx:if="{{credentials.length > 0}}">
+    <view
+      class="token-card {{item.tokenActiveClass}}"
+      wx:for="{{credentials}}"
+      wx:key="id"
+    >
       <view class="token-left">
-        <view class="token-platform-badge" style="background:{{item.platform === 'github' ? '#fff3f0' : '#fef0f0'}};color:{{item.platform === 'github' ? '#f4430c' : '#c71d23'}};">
-          <text>{{item.platform === 'github' ? 'GH' : 'GT'}}</text>
+        <view class="token-platform-badge" style="background:{{item.platformBg}};color:{{item.platformColor}};">
+          <text>{{item.platformShort}}</text>
         </view>
         <view class="token-info">
-          <text class="token-name">{{item.name}}</text>
-          <text class="token-username">{{item.username || '未验证'}}</text>
+          <view class="token-name-row">
+            <text class="token-name">{{item.name}}</text>
+            <view class="active-tag" wx:if="{{item.isActive}}">
+              <text>当前使用</text>
+            </view>
+          </view>
+          <view class="token-meta">
+            <text class="token-platform-label">{{item.platformLabel}}</text>
+            <text class="token-sep">·</text>
+            <text class="token-auth">{{item.authTypeLabel}}</text>
+            <text class="token-sep">·</text>
+            <text class="token-username">{{item.displayUsername}}</text>
+          </view>
         </view>
       </view>
+
       <view class="token-actions">
-        <view class="action-btn action-edit" data-id="{{item.id}}" bindtap="onEditToken">
+        <!-- 非活跃账号：使用按钮 -->
+        <view
+          class="action-btn action-use"
+          wx:if="{{item.isNotActive}}"
+          data-id="{{item.id}}"
+          bindtap="onSetActive"
+        >
+          <text>使用</text>
+        </view>
+        <!-- 编辑 / 删除 -->
+        <view class="action-btn action-edit" data-id="{{item.id}}" bindtap="onEditCredential">
           <text>编辑</text>
         </view>
-        <view class="action-btn action-delete" data-id="{{item.id}}" bindtap="onDeleteToken">
+        <view class="action-btn action-delete" data-id="{{item.id}}" bindtap="onDeleteCredential">
           <text>删除</text>
         </view>
       </view>
@@ -32,14 +58,14 @@
   <!-- 空状态 -->
   <view class="empty-state" wx:else>
     <text class="empty-icon">🔑</text>
-    <text class="empty-title">暂无令牌</text>
-    <text class="empty-desc">添加令牌后即可访问你的 Git 仓库</text>
+    <text class="empty-title">暂无账号</text>
+    <text class="empty-desc">添加账号后即可访问你的 Git 仓库</text>
   </view>
 
   <!-- 添加按钮 -->
-  <navigator class="add-btn" url="/pages/git/account/edit/page">
+  <view class="add-btn" bindtap="onAddCredential">
     <text class="add-btn-icon">+</text>
-    <text class="add-btn-text">添加令牌</text>
-  </navigator>
+    <text class="add-btn-text">添加账号</text>
+  </view>
 
 </view>

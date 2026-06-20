@@ -67,6 +67,89 @@
   line-height: 1.6;
 }
 
+/* =================== Hint =================== */
+.form-hint {
+  font-size: 22rpx;
+  color: #b0b3b8;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* =================== Test Button =================== */
+.test-btn {
+  margin-top: 16rpx;
+  background: #ffffff;
+  color: #1a73e8;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid #1a73e8;
+}
+
+/* =================== Test Result =================== */
+.test-result {
+  display: flex;
+  align-items: center;
+  margin-top: 16rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 16rpx;
+}
+
+.test-success {
+  background: #f0fdf4;
+}
+
+.test-fail {
+  background: #fef2f2;
+}
+
+.test-icon {
+  font-size: 32rpx;
+  font-weight: 700;
+  margin-right: 16rpx;
+}
+
+.test-success .test-icon {
+  color: #16a34a;
+}
+
+.test-fail .test-icon {
+  color: #dc2626;
+}
+
+.test-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.test-msg {
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.test-success .test-msg {
+  color: #16a34a;
+}
+
+.test-fail .test-msg {
+  color: #dc2626;
+}
+
+.test-user {
+  font-size: 24rpx;
+  margin-top: 4rpx;
+}
+
+.test-success .test-user {
+  color: #15803d;
+}
+
+.test-fail .test-user {
+  color: #b91c1c;
+}
+
 /* =================== Save Button =================== */
 .save-btn {
   margin-top: 40rpx;

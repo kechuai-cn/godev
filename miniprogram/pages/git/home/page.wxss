@@ -5,40 +5,7 @@
   background: #f5f6fa;
 }
 
-/* =================== Tabs =================== */
-.tabs {
-  display: flex;
-  background: #ffffff;
-  padding: 0 32rpx;
-  gap: 8rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.tab-item {
-  position: relative;
-  padding: 24rpx 24rpx 20rpx;
-  font-size: 28rpx;
-  color: #888;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.tab-active {
-  color: #1c1e21;
-  font-weight: 700;
-}
-
-.tab-indicator {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40rpx;
-  height: 6rpx;
-  border-radius: 3rpx;
-}
-
-/* =================== Account Bar =================== */
+/* =================== Account Bar（顶部第一栏） =================== */
 .account-bar {
   display: flex;
   align-items: center;
@@ -48,15 +15,17 @@
   border-bottom: 1rpx solid #f0f0f0;
 }
 
-.account-info {
+.account-left {
   display: flex;
   align-items: center;
   gap: 16rpx;
+  flex: 1;
+  overflow: hidden;
 }
 
 .account-avatar {
-  width: 56rpx;
-  height: 56rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -66,7 +35,7 @@
 
 .account-avatar text {
   color: #ffffff;
-  font-size: 26rpx;
+  font-size: 28rpx;
   font-weight: 700;
 }
 
@@ -74,12 +43,16 @@
   display: flex;
   flex-direction: column;
   gap: 4rpx;
+  overflow: hidden;
 }
 
 .account-name {
-  font-size: 28rpx;
-  font-weight: 600;
+  font-size: 30rpx;
+  font-weight: 700;
   color: #1c1e21;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .account-platform {
@@ -87,15 +60,27 @@
   color: #888;
 }
 
-.account-arrow {
-  font-size: 36rpx;
-  color: #c0c4cc;
-  line-height: 1;
+.account-right {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  flex-shrink: 0;
+  margin-left: 16rpx;
 }
 
-/* =================== Search =================== */
+.switch-icon {
+  font-size: 28rpx;
+  color: #888;
+}
+
+.switch-label {
+  font-size: 22rpx;
+  color: #888;
+}
+
+/* =================== Search Bar（顶部第二栏） =================== */
 .search-bar {
-  padding: 16rpx 32rpx;
+  padding: 16rpx 24rpx;
   background: #ffffff;
   border-bottom: 1rpx solid #f0f0f0;
 }
@@ -112,12 +97,30 @@
 .search-icon {
   font-size: 28rpx;
   opacity: 0.5;
+  flex-shrink: 0;
 }
 
 .search-input {
   flex: 1;
   font-size: 26rpx;
   color: #1c1e21;
+}
+
+.search-clear {
+  width: 36rpx;
+  height: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+.search-clear text {
+  font-size: 20rpx;
+  color: #fff;
+  line-height: 1;
 }
 
 /* =================== Empty State =================== */
@@ -228,9 +231,10 @@
   opacity: 0.9;
 }
 
+/* --- Repo Header --- */
 .repo-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16rpx;
   margin-bottom: 16rpx;
 }
@@ -239,7 +243,6 @@
   width: 52rpx;
   height: 52rpx;
   border-radius: 14rpx;
-  background: linear-gradient(135deg, #f4430c 0%, #ff6b4a 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -260,6 +263,13 @@
   overflow: hidden;
 }
 
+.repo-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
 .repo-name {
   font-size: 28rpx;
   font-weight: 700;
@@ -269,27 +279,51 @@
   white-space: nowrap;
 }
 
+/* --- Badges（私有 + 归档） --- */
+.repo-badges {
+  display: flex;
+  gap: 8rpx;
+  flex-shrink: 0;
+}
+
+.badge {
+  border-radius: 8rpx;
+  padding: 2rpx 12rpx;
+  flex-shrink: 0;
+}
+
+.badge text {
+  font-size: 20rpx;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.badge-private {
+  background: #f0f2f5;
+}
+
+.badge-private text {
+  color: #888;
+}
+
+.badge-archived {
+  background: #f5f0e6;
+}
+
+.badge-archived text {
+  color: #9a7b00;
+}
+
 .repo-fullname {
   font-size: 22rpx;
   color: #888;
-  margin-top: 2rpx;
+  margin-top: 4rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.repo-private {
-  background: #f0f2f5;
-  border-radius: 8rpx;
-  padding: 4rpx 12rpx;
-  flex-shrink: 0;
-}
-
-.repo-private text {
-  font-size: 20rpx;
-  color: #888;
-}
-
+/* --- Repo Description --- */
 .repo-desc {
   font-size: 24rpx;
   color: #606770;
@@ -332,6 +366,55 @@
   font-size: 22rpx;
   color: #b0b3b8;
   margin-left: auto;
+}
+
+/* =================== Load More =================== */
+.load-more {
+  display: flex;
+  justify-content: center;
+  padding: 24rpx 0 8rpx;
+}
+
+.load-more-btn {
+  background: #ffffff;
+  color: #1a73e8;
+  font-size: 26rpx;
+  font-weight: 600;
+  padding: 16rpx 48rpx;
+  border-radius: 16rpx;
+  border: 2rpx solid #1a73e8;
+}
+
+.load-more-loading {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 0;
+}
+
+.loading-spinner-sm {
+  width: 32rpx;
+  height: 32rpx;
+  border: 3rpx solid #f0f0f0;
+  border-top-color: #1a73e8;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.load-more-loading text {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.load-end {
+  display: flex;
+  justify-content: center;
+  padding: 24rpx 0 8rpx;
+}
+
+.load-end text {
+  font-size: 24rpx;
+  color: #c0c4cc;
 }
 
 /* =================== No Result =================== */
