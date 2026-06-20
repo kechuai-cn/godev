@@ -37,9 +37,9 @@
   </view>
 
   <!-- 添加按钮 -->
-  <view class="add-btn" bindtap="onAddToken">
+  <navigator class="add-btn" url="/pages/git/account/edit/page">
     <text class="add-btn-icon">+</text>
     <text class="add-btn-text">添加令牌</text>
-  </view>
+  </navigator>
 
 </view>
