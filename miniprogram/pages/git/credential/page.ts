@@ -1,4 +1,4 @@
-// pages/git/account/page.ts
+// pages/git/credential/page.ts
 import {
   getCredentials,
   removeCredential,
@@ -78,7 +78,7 @@ Page({
       itemList: PLATFORMS.map(p => p.label),
       success: (res) => {
         const platform = PLATFORMS[res.tapIndex].value
-        wx.navigateTo({ url: `/pages/git/account/edit/page?platform=${platform}` })
+        wx.navigateTo({ url: `/pages/git/credential-edit/page?platform=${platform}` })
       },
     })
   },
@@ -104,6 +104,6 @@ Page({
 
   onEditCredential(e: WechatMiniprogram.TouchEvent) {
     const { id } = e.currentTarget.dataset
-    wx.navigateTo({ url: `/pages/git/account/edit/page?id=${id}` })
+    wx.navigateTo({ url: `/pages/git/credential-edit/page?id=${id}` })
   },
 })

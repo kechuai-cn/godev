@@ -1,4 +1,4 @@
-// pages/git/account/edit/page.ts
+// pages/git/credential-edit/page.ts
 import {
   getCredentials,
   addCredential,
@@ -11,7 +11,7 @@ import {
   GitCredential,
   PlatformType,
   AuthType,
-} from '../../../../utils/git-api'
+} from '../../../utils/git-api'
 
 Page({
   data: {

@@ -232,9 +232,9 @@ Page({
     )
   },
 
-  /** 去账号管理页 */
+  /** 去凭据管理页 */
   goToAccount() {
-    wx.navigateTo({ url: '/pages/git/account/page' })
+    wx.navigateTo({ url: '/pages/git/credential/page' })
   },
 
   /** 进入仓库详情 */

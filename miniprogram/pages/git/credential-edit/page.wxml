@@ -1,4 +1,4 @@
-<!-- pages/git/account/edit/page.wxml -->
+<!-- pages/git/credential-edit/page.wxml -->
 <view class="container">
 
   <!-- 平台选择 -->

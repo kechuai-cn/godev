@@ -1,4 +1,4 @@
-/* pages/git/account/edit/page.wxss */
+/* pages/git/credential-edit/page.wxss */
 
 .container {
   min-height: 100vh;

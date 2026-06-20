@@ -35,11 +35,13 @@ godev/
     ├── sitemap.json
     └── pages/
         ├── home/          # ✅ 首页（已完成）
-        ├── git-repos/     # 🚧 Git 仓库列表（占位）
-        ├── git-token/     # 🚧 Git 令牌管理（占位）
-        ├── git-repo-detail/  # 🚧 仓库详情（占位）
-        ├── git-repo-files/   # 🚧 文件夹浏览（占位）
-        └── git-file-detail/  # 🚧 文件详情（占位）
+        └── git/           # Git 模块
+            ├── home/      # ✅ Git 首页（已完成）
+            ├── credential/         # ✅ 凭据管理列表（已完成）
+            ├── credential-edit/    # ✅ 凭据新增/编辑（已完成）
+            ├── repo/               # 🚧 仓库详情（占位）
+            ├── repo-files/         # 🚧 文件夹浏览（占位）
+            └── file/              # 🚧 文件详情（占位）
 ```
 
 每个页面目录包含四个同名文件：`.ts` / `.json` / `.wxml` / `.wxss`。
@@ -59,11 +61,12 @@ godev/
 | 路径 | 描述 |
 |------|------|
 | `pages/home/page` | 首页，所有功能模块入口 |
-| `pages/git-repos/page` | Git 仓库首页，支持多账号切换（GitHub / Gitee 等），罗列所有仓库含组织仓库；无账号时引导前往令牌管理页 |
-| `pages/git-token/page` | Git 令牌管理，支持 GitHub / Gitee 等平台令牌录入、编辑、删除 |
-| `pages/git-repo-detail/page` | 仓库详情（README、Star、语言、分支等） |
-| `pages/git-repo-files/page` | 仓库内容文件夹浏览 |
-| `pages/git-file-detail/page` | 文件详情，代码高亮浏览 |
+| `pages/git/home/page` | Git 首页，支持多凭据切换，罗列所有仓库；无凭据时引导前往凭据管理页 |
+| `pages/git/credential/page` | Git 凭据管理，支持 GitHub / Gitee / GitLab 等平台凭据录入、编辑、删除 |
+| `pages/git/credential-edit/page` | 凭据新增/编辑页，支持测试连接 |
+| `pages/git/repo/page` | 仓库详情（README、Star、语言、分支等） |
+| `pages/git/repo-files/page` | 仓库内容文件夹浏览 |
+| `pages/git/file/page` | 文件详情，代码高亮浏览 |
 
 ---
 
@@ -116,18 +119,22 @@ godev/
 
 Git 仓库管理模块的核心逻辑：
 
-- **令牌存储**：使用 `wx.setStorageSync` 本地持久化，key 格式 `git_tokens`，存储结构为令牌对象数组
-- **多平台支持**：目前规划 GitHub（`https://api.github.com`）和 Gitee（`https://gitee.com/api/v5`）
-- **账号切换**：`git-repos` 页面顶部 Tabs 切换当前平台账号，数据不混用
+- **凭据存储**：使用 `wx.setStorageSync` 本地持久化，key 格式 `git_credentials`，存储结构为凭据对象数组
+- **多平台支持**：目前规划 GitHub（`https://api.github.com`）、Gitee（`https://gitee.com/api/v5`）、GitLab（含私有部署）
+- **凭据切换**：`git/home` 页面顶部支持切换当前活跃凭据，数据不混用
 - **仓库数据结构**（参考）：
 
 ```typescript
-interface GitToken {
+interface GitCredential {
   id: string       // 唯一标识（时间戳）
-  platform: 'github' | 'gitee'
+  platform: 'github' | 'gitee' | 'gitlab'
+  authType: 'access_token' | 'username_password'
   name: string     // 用户自定义备注名
-  token: string    // Personal Access Token
-  username?: string
+  token?: string    // Personal Access Token（authType=access_token 时必填）
+  username?: string // 用户名（authType=username_password 时必填）
+  password?: string // 密码 / 个人访问令牌（authType=username_password 时必填）
+  baseUrl?: string  // 私有部署 GitLab 服务器地址
+  resolvedUsername?: string // 测试连接后解析出的用户名
 }
 
 interface GitRepo {
@@ -148,9 +155,9 @@ interface GitRepo {
 
 ## 开发前必读
 
-- 先跑通 `pages/git-repos/page` 的令牌判断逻辑（无令牌 → 引导去 `git-token`）
+- 先跑通 `pages/git/home/page` 的凭据判断逻辑（无凭据 → 引导去 `git/credential`）
 - 网络请求统一封装在 `miniprogram/utils/request.ts`（待创建），避免各页面直接调用 `wx.request`
-- 所有平台 API 的 baseURL、headers（`Authorization: token xxx`）在 utils 层处理
+- 所有平台 API 的 baseURL、headers（`Authorization` 等）在 utils 层处理
 
 ---
 

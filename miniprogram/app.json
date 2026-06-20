@@ -2,11 +2,11 @@
   "pages": [
     "pages/home/page",
     "pages/git/home/page",
-    "pages/git/account/page",
-    "pages/git/account/edit/page",
+    "pages/git/credential/page",
+    "pages/git/credential-edit/page",
     "pages/git/repo/page",
     "pages/git/repo-files/page",
-    "pages/git/file/page"
+    "pages/git/repo-file/page"
   ],
   "window": {
     "backgroundTextStyle": "dark",
