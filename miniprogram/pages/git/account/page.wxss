@@ -1,17 +1,152 @@
-/* pages/git-token/page.wxss */
+/* pages/git/account/page.wxss */
+
 .container {
   min-height: 100vh;
   background: #f5f6fa;
+  padding-bottom: 140rpx;
+}
+
+.header {
+  padding: 32rpx 32rpx 16rpx;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1c1e21;
+  display: block;
+}
+
+.header-desc {
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 6rpx;
+  display: block;
+}
+
+/* =================== Token List =================== */
+.token-list {
+  padding: 8rpx 24rpx;
+}
+
+.token-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.token-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex: 1;
+  overflow: hidden;
+}
+
+.token-platform-badge {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 14rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  font-size: 22rpx;
+  font-weight: 800;
 }
-.placeholder {
+
+.token-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.token-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1c1e21;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.token-username {
+  font-size: 22rpx;
+  color: #888;
+  margin-top: 4rpx;
+}
+
+.token-actions {
+  display: flex;
+  gap: 12rpx;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  padding: 10rpx 20rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+}
+
+.action-edit {
+  background: #e8f0fe;
+  color: #1a73e8;
+}
+
+.action-delete {
+  background: #fef3e2;
+  color: #e8710a;
+}
+
+/* =================== Empty =================== */
+.empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16rpx;
+  padding: 120rpx 60rpx;
 }
-.placeholder-icon { font-size: 80rpx; line-height: 1; }
-.placeholder-title { font-size: 32rpx; font-weight: 700; color: #1c1e21; }
-.placeholder-desc { font-size: 26rpx; color: #888; }
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1c1e21;
+  margin-bottom: 8rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #888;
+}
+
+/* =================== Add Button =================== */
+.add-btn {
+  position: fixed;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background: #f4430c;
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 22rpx 48rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(244, 67, 12, 0.35);
+}
+
+.add-btn-icon {
+  font-size: 32rpx;
+  font-weight: 300;
+}

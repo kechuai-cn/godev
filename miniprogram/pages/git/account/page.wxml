@@ -1,8 +1,45 @@
-<!-- pages/git-token/page.wxml -->
+<!-- pages/git/account/page.wxml -->
 <view class="container">
-  <view class="placeholder">
-    <text class="placeholder-icon">🔑</text>
-    <text class="placeholder-title">Git 令牌管理</text>
-    <text class="placeholder-desc">功能开发中...</text>
+
+  <view class="header">
+    <text class="header-title">令牌管理</text>
+    <text class="header-desc">配置 Git 平台个人访问令牌</text>
   </view>
+
+  <!-- 令牌列表 -->
+  <view class="token-list" wx:if="{{tokens.length > 0}}">
+    <view class="token-card" wx:for="{{tokens}}" wx:key="id">
+      <view class="token-left">
+        <view class="token-platform-badge" style="background:{{item.platform === 'github' ? '#fff3f0' : '#fef0f0'}};color:{{item.platform === 'github' ? '#f4430c' : '#c71d23'}};">
+          <text>{{item.platform === 'github' ? 'GH' : 'GT'}}</text>
+        </view>
+        <view class="token-info">
+          <text class="token-name">{{item.name}}</text>
+          <text class="token-username">{{item.username || '未验证'}}</text>
+        </view>
+      </view>
+      <view class="token-actions">
+        <view class="action-btn action-edit" data-id="{{item.id}}" bindtap="onEditToken">
+          <text>编辑</text>
+        </view>
+        <view class="action-btn action-delete" data-id="{{item.id}}" bindtap="onDeleteToken">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">🔑</text>
+    <text class="empty-title">暂无令牌</text>
+    <text class="empty-desc">添加令牌后即可访问你的 Git 仓库</text>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="onAddToken">
+    <text class="add-btn-icon">+</text>
+    <text class="add-btn-text">添加令牌</text>
+  </view>
+
 </view>

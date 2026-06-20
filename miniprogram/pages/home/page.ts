@@ -22,7 +22,7 @@ Page({
         iconSvg: 'git',
         color: '#f4430c',
         bgColor: '#fff3f0',
-        path: '/pages/git-repos/page',
+        path: '/pages/git/home/page',
       },
       {
         id: 'validator',

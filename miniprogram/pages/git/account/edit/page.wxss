@@ -1,0 +1,85 @@
+/* pages/git/account/edit/page.wxss */
+
+.container {
+  min-height: 100vh;
+  background: #f5f6fa;
+  padding: 24rpx;
+}
+
+/* =================== Form =================== */
+.form-section {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.section-label {
+  font-size: 24rpx;
+  color: #888;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  background: #f5f6fa;
+  border-radius: 12rpx;
+  padding: 18rpx 20rpx;
+  font-size: 28rpx;
+  color: #1c1e21;
+}
+
+.form-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f6fa;
+  border-radius: 12rpx;
+  padding: 18rpx 20rpx;
+  font-size: 28rpx;
+  color: #1c1e21;
+}
+
+.picker-arrow {
+  color: #b0b3b8;
+  font-size: 24rpx;
+}
+
+.toggle-pwd {
+  margin-top: 12rpx;
+  align-self: flex-end;
+}
+
+.toggle-pwd text {
+  font-size: 24rpx;
+  color: #1a73e8;
+}
+
+/* =================== Tip =================== */
+.form-tip {
+  padding: 16rpx 8rpx;
+}
+
+.form-tip text {
+  font-size: 22rpx;
+  color: #b0b3b8;
+  line-height: 1.6;
+}
+
+/* =================== Save Button =================== */
+.save-btn {
+  margin-top: 40rpx;
+  background: #f4430c;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 600;
+  text-align: center;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 24rpx rgba(244, 67, 12, 0.3);
+}
+
+.btn-disabled {
+  opacity: 0.5;
+}

@@ -1,8 +1,115 @@
-<!-- pages/git-repos/page.wxml -->
+<!--pages/git/home/page.wxml -->
 <view class="container">
-  <view class="placeholder">
-    <text class="placeholder-icon">⑂</text>
-    <text class="placeholder-title">Git 仓库管理</text>
-    <text class="placeholder-desc">功能开发中...</text>
+
+  <!-- 平台切换 Tabs -->
+  <view class="tabs">
+    <view
+      class="tab-item {{item.isActive ? 'tab-active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="value"
+      data-platform="{{item.value}}"
+      bindtap="onTabTap"
+    >
+      <text>{{item.label}}</text>
+      <view class="tab-indicator" wx:if="{{item.isActive}}" style="background:{{item.color}};"></view>
+    </view>
   </view>
+
+  <!-- 用户信息栏（令牌已存在时显示） -->
+  <view class="account-bar" wx:if="{{!isEmpty}}" bindtap="goToAccount">
+    <view class="account-info">
+      <view class="account-avatar" style="background:{{accountColor}};">
+        <text>{{accountInitial}}</text>
+      </view>
+      <view class="account-text">
+        <text class="account-name">{{username || '未验证'}}</text>
+        <text class="account-platform">{{currentPlatformLabel}} · 点击管理令牌</text>
+      </view>
+    </view>
+    <text class="account-arrow">›</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar" wx:if="{{!isEmpty}}">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索仓库..."
+        value="{{searchKey}}"
+        bindinput="onSearchInput"
+      />
+    </view>
+  </view>
+
+  <!-- 无令牌状态 -->
+  <view class="empty-state" wx:if="{{isEmpty}}">
+    <view class="empty-icon">⑂</view>
+    <text class="empty-title">未配置 {{currentPlatformLabel}} 令牌</text>
+    <text class="empty-desc">配置个人访问令牌后，即可浏览你的仓库</text>
+    <view class="empty-btn" bindtap="goToAccount">
+      <text>去配置令牌</text>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误提示 -->
+  <view class="error-state" wx:if="{{error}}">
+    <text class="error-text">{{error}}</text>
+    <view class="retry-btn" bindtap="loadRepos">
+      <text>重试</text>
+    </view>
+  </view>
+
+  <!-- 仓库列表 -->
+  <view class="repo-list" wx:if="{{isList}}">
+    <view
+      class="repo-card"
+      wx:for="{{filteredRepos}}"
+      wx:key="id"
+      data-repo="{{item}}"
+      bindtap="onRepoTap"
+    >
+      <view class="repo-header">
+        <view class="repo-avatar" style="background:{{item.avatarBg}};">
+          <text class="repo-avatar-text">{{item.avatarText}}</text>
+        </view>
+        <view class="repo-title-wrap">
+          <text class="repo-name">{{item.name}}</text>
+          <text class="repo-fullname">{{item.fullName}}</text>
+        </view>
+        <view class="repo-private" wx:if="{{item.private}}">
+          <text>私有</text>
+        </view>
+      </view>
+
+      <text class="repo-desc" wx:if="{{item.description}}">{{item.description}}</text>
+
+      <view class="repo-meta">
+        <view class="meta-item" wx:if="{{item.language}}">
+          <view class="lang-dot" style="background:{{item.langColor}};"></view>
+          <text>{{item.language}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-icon">★</text>
+          <text>{{item.stars}}</text>
+        </view>
+        <text class="meta-time">{{item.updatedAtFormatted}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索无结果 -->
+  <view class="no-result" wx:if="{{showNoResult}}">
+    <text class="no-result-text">未找到匹配的仓库</text>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-space"></view>
+
 </view>

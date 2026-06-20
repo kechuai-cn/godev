@@ -1,0 +1,46 @@
+<!-- pages/git/account/edit/page.wxml -->
+<view class="container">
+
+  <view class="form-section">
+    <text class="section-label">平台</text>
+    <picker mode="selector" range="{{platforms}}" range-key="label" value="{{platformIndex}}" bindchange="onPlatformChange">
+      <view class="form-picker">
+        <text>{{platformLabel}}</text>
+        <text class="picker-arrow">▸</text>
+      </view>
+    </picker>
+  </view>
+
+  <view class="form-section">
+    <text class="section-label">备注名称</text>
+    <input
+      class="form-input"
+      placeholder="如：我的 GitHub 账号"
+      value="{{name}}"
+      bindinput="onNameInput"
+    />
+  </view>
+
+  <view class="form-section">
+    <text class="section-label">Personal Access Token</text>
+    <input
+      class="form-input"
+      placeholder="粘贴你的令牌"
+      value="{{token}}"
+      password="{{!showToken}}"
+      bindinput="onTokenInput"
+    />
+    <view class="toggle-pwd" bindtap="toggleToken">
+      <text>{{showToken ? '隐藏' : '显示'}}</text>
+    </view>
+  </view>
+
+  <view class="form-tip">
+    <text>令牌仅存储在本地设备上，不会上传到服务器。</text>
+  </view>
+
+  <view class="save-btn {{saving ? 'btn-disabled' : ''}}" bindtap="onSave">
+    <text>{{isEdit ? '保存修改' : '添加令牌'}}</text>
+  </view>
+
+</view>

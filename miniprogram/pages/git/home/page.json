@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "Git 仓库",
   "navigationBarBackgroundColor": "#ffffff",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }
