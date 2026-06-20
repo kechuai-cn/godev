@@ -1,22 +1,17 @@
 <!--pages/git/home/page.wxml-->
 <view class="container">
 
-  <!-- 账号栏（顶部第一栏） -->
-  <view class="account-bar" bindtap="goToAccount">
+  <navigator class="account-bar" url="/pages/git/credential/page">
     <view class="account-left">
-      <view class="account-avatar" style="background:{{accountPlatformColor}};">
-        <text>{{accountInitial}}</text>
-      </view>
       <view class="account-text">
         <text class="account-name">{{accountName}}</text>
-        <text class="account-platform">{{accountPlatformLabel}}</text>
       </view>
     </view>
     <view class="account-right">
       <text class="switch-icon">⇄</text>
       <text class="switch-label">切换</text>
     </view>
-  </view>
+  </navigator>
 
   <!-- 搜索栏（顶部第二栏） -->
   <view class="search-bar">

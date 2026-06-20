@@ -1,4 +1,3 @@
-// pages/git/credential/page.ts
 import {
   getCredentials,
   removeCredential,

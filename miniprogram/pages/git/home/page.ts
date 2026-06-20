@@ -1,4 +1,3 @@
-// pages/git/home/page.ts
 import {
   getCredentials,
   getActiveCredential,

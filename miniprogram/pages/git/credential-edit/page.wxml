@@ -1,7 +1,15 @@
-<!-- pages/git/credential-edit/page.wxml -->
 <view class="container">
 
-  <!-- 平台选择 -->
+  <view class="form-section">
+    <text class="form-label">名称</text>
+    <input
+      class="form-input"
+      placeholder="给这个账号起个名字"
+      value="{{name}}"
+      bindinput="onNameInput"
+    />
+  </view>
+
   <view class="form-section">
     <text class="form-label">平台</text>
     <picker mode="selector" range="{{platformLabels}}" value="{{platformIndex}}" bindchange="onPlatformChange">
@@ -12,7 +20,6 @@
     </picker>
   </view>
 
-  <!-- 认证方式 -->
   <view class="form-section">
     <text class="form-label">认证方式</text>
     <picker mode="selector" range="{{availableAuthTypeLabels}}" value="{{authTypeIndex}}" bindchange="onAuthTypeChange">
@@ -23,18 +30,6 @@
     </picker>
   </view>
 
-  <!-- 备注名称 -->
-  <view class="form-section">
-    <text class="form-label">备注名称</text>
-    <input
-      class="form-input"
-      placeholder="给这个账号起个名字"
-      value="{{name}}"
-      bindinput="onNameInput"
-    />
-  </view>
-
-  <!-- Access Token -->
   <view class="form-section" wx:if="{{showTokenField}}">
     <text class="form-label">Access Token</text>
     <view class="input-row">
@@ -51,7 +46,6 @@
     </view>
   </view>
 
-  <!-- 用户名 + 密码 -->
   <block wx:if="{{showUserPassFields}}">
     <view class="form-section">
       <text class="form-label">用户名</text>
@@ -79,7 +73,6 @@
     </view>
   </block>
 
-  <!-- 服务器地址（GitLab） -->
   <view class="form-section" wx:if="{{showBaseUrlField}}">
     <text class="form-label">服务器地址</text>
     <input
@@ -93,7 +86,6 @@
     </view>
   </view>
 
-  <!-- 测试连接 -->
   <view class="test-section">
     <view class="test-btn {{testBtnClass}}" bindtap="onTest">
       <text wx:if="{{isTesting}}">连接中...</text>
@@ -113,13 +105,13 @@
     </view>
   </view>
 
-  <view class="form-tip">
-    <text>凭证仅存储在本地设备上，不会上传到服务器。</text>
-  </view>
-
   <!-- 保存按钮 -->
   <view class="save-btn {{saveBtnClass}}" bindtap="onSave">
     <text>{{saveBtnText}}</text>
+  </view>
+
+  <view class="form-tip">
+    <text>凭证仅存储在本地设备上，不会上传到服务器。</text>
   </view>
 
 </view>

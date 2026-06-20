@@ -6,100 +6,12 @@
   padding-bottom: 60rpx;
 }
 
-/* =================== Header =================== */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24rpx 32rpx 20rpx;
-  background: #ffffff;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16rpx;
-}
-
-.header-logo {
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 20rpx;
-  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4rpx 12rpx rgba(26, 115, 232, 0.35);
-}
-
-.logo-text {
-  color: #ffffff;
-  font-size: 36rpx;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.header-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.app-name {
-  font-size: 34rpx;
-  font-weight: 700;
-  color: #1c1e21;
-  line-height: 1.2;
-}
-
-.greeting {
-  font-size: 22rpx;
-  color: #888;
-  margin-top: 2rpx;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-}
-
-.avatar-placeholder {
-  width: 64rpx;
-  height: 64rpx;
-  border-radius: 50%;
-  background: #f0f2f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32rpx;
-}
-
-/* =================== Section Header =================== */
-.section-header {
-  padding: 40rpx 32rpx 20rpx;
-  display: flex;
-  flex-direction: column;
-}
-
-.section-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: #1c1e21;
-  line-height: 1.3;
-}
-
-.section-subtitle {
-  font-size: 24rpx;
-  color: #888;
-  margin-top: 6rpx;
-}
-
 /* =================== Feature Grid =================== */
 .feature-grid {
   padding: 8rpx 24rpx 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20rpx;
+  gap: 32rpx;
 }
 
 .feature-card {
@@ -137,9 +49,10 @@
 }
 
 /* 图标区域 */
-.card-icon-wrap {
-  width: 88rpx;
-  height: 88rpx;
+.card-icon {
+  width: 188rpx;
+  height: 188rpx;
+  margin: auto;
   border-radius: 22rpx;
   display: flex;
   align-items: center;
@@ -147,65 +60,24 @@
   margin-bottom: 20rpx;
 }
 
-.card-icon-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-svg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .icon-char {
-  font-size: 44rpx;
+  font-size: 84rpx;
   line-height: 1;
-}
-
-/* 卡片文字 */
-.card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8rpx;
 }
 
 .card-title {
-  font-size: 28rpx;
+  font-size: 40rpx;
   font-weight: 700;
   color: #1c1e21;
   line-height: 1.3;
-}
-
-.card-desc {
-  font-size: 22rpx;
-  color: #888;
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* 箭头 */
-.card-arrow {
-  margin-top: 16rpx;
-  font-size: 36rpx;
-  font-weight: 300;
-  line-height: 1;
-  opacity: 0.6;
+  text-align: center;
 }
 
 /* =================== Footer =================== */
 .footer {
-  margin-top: 60rpx;
   display: flex;
   justify-content: center;
-}
-
-.footer-text {
-  font-size: 22rpx;
+  margin-top: 60rpx;
+  font-size: 24rpx;
   color: #bbb;
 }
