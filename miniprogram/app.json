@@ -1,11 +1,8 @@
 {
   "pages": [
     "pages/home/page",
-    "pages/git-repos/page",
-    "pages/git-token/page",
-    "pages/git-repo-detail/page",
-    "pages/git-repo-files/page",
-    "pages/git-file-detail/page"
+    "pages/git/home/page",
+    "pages/git/account/page"
   ],
   "window": {
     "backgroundTextStyle": "dark",
