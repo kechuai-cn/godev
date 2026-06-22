@@ -1,47 +1,48 @@
 {
-  "appid": "wx46edc282a76dda0a",
+  "description": "项目配置文件",
+  "miniprogramRoot": "miniprogram/",
   "compileType": "miniprogram",
-  "libVersion": "3.7.1",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
   "setting": {
-    "coverView": true,
-    "es6": false,
-    "postcss": true,
-    "minified": true,
-    "enhance": true,
-    "showShadowRootInWxmlPanel": true,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "minifyWXML": true,
-    "useCompilerPlugins": [
-      "typescript"
-    ],
+    "useCompilerPlugins": ["typescript"],
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
+    "coverView": false,
+    "postcss": false,
+    "minified": false,
+    "enhance": false,
+    "showShadowRootInWxmlPanel": false,
+    "packNpmRelationList": [],
+    "ignoreUploadUnusedFiles": true,
+    "compileHotReLoad": false,
+    "skylineRenderEnable": true,
+    "es6": false,
     "compileWorklet": false,
     "uglifyFileName": false,
     "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "minifyWXSS": true,
+    "minifyWXML": true,
     "localPlugins": false,
-    "disableUseStrict": false,
     "condition": false,
     "swc": false,
-    "disableSWC": true
+    "disableSWC": true,
+    "disableUseStrict": false
   },
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {},
+  "srcMiniprogramRoot": "miniprogram/",
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "miniprogramRoot": "miniprogram/",
-  "srcMiniprogramRoot": "miniprogram/",
-  "projectname": "GoDev",
-  "description": "Go Dev 微信小程序",
-  "simulatorPluginLibVersion": {}
+  "libVersion": "trial",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wx46edc282a76dda0a"
 }

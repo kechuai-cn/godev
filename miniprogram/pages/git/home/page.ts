@@ -1,17 +1,12 @@
 import {
   getCredentials,
   getActiveCredential,
-  getActiveCredentialId,
   setActiveCredentialId,
   fetchReposPage,
-  fetchUser,
   formatTime,
   GitCredential,
   GitRepo,
-  RepoPage,
-  PLATFORMS,
   getPlatformConfig,
-  PlatformType,
 } from '../../../utils/git-api'
 
 /** 语言 → 颜色映射 */
@@ -43,11 +38,6 @@ interface RepoDisplay extends GitRepo {
   updatedAtFormatted: string
 }
 
-interface PlatformInfo {
-  label: string
-  color: string
-}
-
 Page({
   data: {
     // 活跃凭证
@@ -72,12 +62,12 @@ Page({
 
     // 状态
     error: '',
-    isEmpty: true,       // 无活跃凭证
-    isLoading: false,     // 首次加载中
-    isList: false,        // 列表有数据
-    isLoadingMore: false,  // 上拉加载中
-    showNoResult: false,  // 搜索无结果
-    showLoadEnd: false,   // 显示"没有更多"
+    isEmpty: true, // 无活跃凭证
+    isLoading: false, // 首次加载中
+    isList: false, // 列表有数据
+    isLoadingMore: false, // 上拉加载中
+    showNoResult: false, // 搜索无结果
+    showLoadEnd: false, // 显示"没有更多"
   },
 
   onLoad() {
@@ -224,10 +214,11 @@ Page({
   applyFilter(repos: RepoDisplay[], key: string): RepoDisplay[] {
     if (!key.trim()) return repos
     const k = key.toLowerCase()
-    return repos.filter(r =>
-      r.name.toLowerCase().includes(k) ||
-      r.fullName.toLowerCase().includes(k) ||
-      (r.description && r.description.toLowerCase().includes(k))
+    return repos.filter(
+      r =>
+        r.name.toLowerCase().includes(k) ||
+        r.fullName.toLowerCase().includes(k) ||
+        (r.description && r.description.toLowerCase().includes(k)),
     )
   },
 

@@ -17,10 +17,10 @@ export interface PlatformConfig {
   value: PlatformType
   label: string
   color: string
-  shortLabel: string          // GH / GT / GL
-  authTypes: AuthType[]       // 该平台支持的认证方式
-  needsBaseUrl: boolean       // 是否需要用户填写服务器地址
-  defaultBaseUrl?: string     // 默认 API 地址（SaaS 版）
+  shortLabel: string // GH / GT / GL
+  authTypes: AuthType[] // 该平台支持的认证方式
+  needsBaseUrl: boolean // 是否需要用户填写服务器地址
+  defaultBaseUrl?: string // 默认 API 地址（SaaS 版）
 }
 
 /** 认证方式配置 */
@@ -35,14 +35,14 @@ export interface GitCredential {
   id: string
   platform: PlatformType
   authType: AuthType
-  name: string                // 备注名称
+  name: string // 备注名称
   // access_token 模式
   token?: string
   // username_password 模式
   username?: string
   password?: string
   // GitLab 私有部署
-  baseUrl?: string            // 服务器 API 地址
+  baseUrl?: string // 服务器 API 地址
   // 运行时获取（API 返回的用户信息）
   resolvedUsername?: string
   avatarUrl?: string
@@ -287,11 +287,7 @@ function getBaseUrl(cred: GitCredential): string {
 }
 
 /** 通用请求 */
-function request<T>(
-  url: string,
-  cred: GitCredential,
-  extraHeader?: Record<string, string>,
-): Promise<T> {
+function request<T>(url: string, cred: GitCredential, extraHeader?: Record<string, string>): Promise<T> {
   return new Promise((resolve, reject) => {
     wx.request({
       url,
@@ -367,7 +363,7 @@ export async function fetchUser(cred: GitCredential): Promise<GitUser> {
 /** 分页结果 */
 export interface RepoPage {
   repos: GitRepo[]
-  hasMore: boolean   // 是否还有下一页
+  hasMore: boolean // 是否还有下一页
 }
 
 // ============================================================
@@ -375,11 +371,7 @@ export interface RepoPage {
 // ============================================================
 
 /** 获取仓库列表（单页） */
-export async function fetchReposPage(
-  cred: GitCredential,
-  page: number = 1,
-  perPage: number = 10,
-): Promise<RepoPage> {
+export async function fetchReposPage(cred: GitCredential, page: number = 1, perPage: number = 10): Promise<RepoPage> {
   const base = getBaseUrl(cred)
   if (cred.platform === 'github') {
     const url = `${base}/user/repos?page=${page}&per_page=${perPage}&type=all&sort=updated`
@@ -458,7 +450,7 @@ function normalizeGitLabRepo(r: any, baseUrl: string): GitRepo {
     private: r.visibility === 'private',
     archived: r.archived || false,
     stars: r.star_count || 0,
-    language: '',  // GitLab 项目列表不返回语言
+    language: '', // GitLab 项目列表不返回语言
     updatedAt: r.last_activity_at,
     url: r.web_url || `${baseUrl.replace(/\/api\/v4$/, '')}/${r.path_with_namespace}`,
     defaultBranch: r.default_branch || 'main',

@@ -1,0 +1,30 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@jihe/prettier':
+        specifier: ^1.0.0
+        version: 1.0.0
+      miniprogram-api-typings:
+        specifier: ^2.8.3-1
+        version: 2.12.0
+
+packages:
+
+  '@jihe/prettier@1.0.0':
+    resolution: {integrity: sha512-j8vT4hrDhs3FaSDOFnOIrveHhxibLaQioQxrcezJIjEXKSTZyWOrjJ2JROPq9P9OocgCRMcIrod73oI2fnU3jg==}
+
+  miniprogram-api-typings@2.12.0:
+    resolution: {integrity: sha512-ibvbqeslVFur0IAvTxLMvsbtvVcMo6gwvOnj0YZHV7aeDLu091VQRrETT2QuiG9P6aZWRcxeNGJChRKVPCp9VQ==}
+
+snapshots:
+
+  '@jihe/prettier@1.0.0': {}
+
+  miniprogram-api-typings@2.12.0: {}

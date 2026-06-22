@@ -29,7 +29,7 @@ page {
   --spacing-lg: 32rpx;
   --spacing-xl: 48rpx;
 
-  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
   font-size: 28rpx;
   color: var(--color-text-primary);
   background-color: var(--color-background);
