@@ -1,4 +1,7 @@
-App<IAppOption>({
-  globalData: {},
-  onLaunch() {},
+import { createApp } from '@vue-mini/core'
+
+createApp({
+  setup() {
+    return {}
+  },
 })

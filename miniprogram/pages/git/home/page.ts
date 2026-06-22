@@ -1,3 +1,5 @@
+// pages/git/home/page.ts
+import { definePage, ref, computed, onShow, onPullDownRefresh, onReachBottom } from '@vue-mini/core'
 import {
   getCredentials,
   getActiveCredential,
@@ -38,205 +40,6 @@ interface RepoDisplay extends GitRepo {
   updatedAtFormatted: string
 }
 
-Page({
-  data: {
-    // 活跃凭证
-    activeCred: null as GitCredential | null,
-    activeCredId: '',
-    accountName: '',
-    accountPlatform: '' as '',
-    accountPlatformLabel: '',
-    accountPlatformColor: '',
-    accountInitial: '',
-
-    // 仓库列表
-    repos: [] as RepoDisplay[],
-    filteredRepos: [] as RepoDisplay[],
-    searchKey: '',
-
-    // 分页
-    page: 1,
-    perPage: 10,
-    hasMore: false,
-    loadingMore: false,
-
-    // 状态
-    error: '',
-    isEmpty: true, // 无活跃凭证
-    isLoading: false, // 首次加载中
-    isList: false, // 列表有数据
-    isLoadingMore: false, // 上拉加载中
-    showNoResult: false, // 搜索无结果
-    showLoadEnd: false, // 显示"没有更多"
-  },
-
-  onLoad() {
-    this.initActiveCred()
-  },
-
-  onShow() {
-    this.initActiveCred()
-  },
-
-  onPullDownRefresh() {
-    this.loadRepos().finally(() => {
-      wx.stopPullDownRefresh()
-    })
-  },
-
-  onReachBottom() {
-    if (this.data.hasMore && !this.data.isLoadingMore) {
-      this.loadMore()
-    }
-  },
-
-  /** 初始化活跃凭证 */
-  initActiveCred() {
-    let cred = getActiveCredential()
-    const allCreds = getCredentials()
-
-    if (!cred && allCreds.length > 0) {
-      // 没有活跃凭证但有凭证，自动选第一个
-      cred = allCreds[0]
-      setActiveCredentialId(cred.id)
-    }
-
-    if (!cred) {
-      this.setData({
-        activeCred: null,
-        activeCredId: '',
-        accountName: '',
-        accountPlatformLabel: '',
-        isEmpty: true,
-        isList: false,
-        repos: [],
-        filteredRepos: [],
-      })
-      return
-    }
-
-    const platformConfig = getPlatformConfig(cred.platform)!
-    const displayUsername = cred.resolvedUsername || cred.username || '未验证'
-
-    this.setData({
-      activeCred: cred,
-      activeCredId: cred.id,
-      accountName: cred.name,
-      accountPlatform: cred.platform,
-      accountPlatformLabel: platformConfig.label,
-      accountPlatformColor: platformConfig.color,
-      accountInitial: displayUsername ? displayUsername[0].toUpperCase() : '?',
-      isEmpty: false,
-      error: '',
-    })
-
-    this.loadRepos()
-  },
-
-  /** 加载首页（第 1 页） */
-  async loadRepos() {
-    const cred = getActiveCredential()
-    if (!cred) return
-
-    this.setData({ isLoading: true, error: '', showNoResult: false })
-    try {
-      const { repos: rawRepos, hasMore } = await fetchReposPage(cred, 1, this.data.perPage)
-      const displayRepos = rawRepos.map(r => toDisplayRepo(r))
-      const filtered = this.applyFilter(displayRepos, this.data.searchKey)
-      this.setData({
-        page: 1,
-        repos: displayRepos,
-        filteredRepos: filtered,
-        hasMore,
-        isLoading: false,
-        isList: displayRepos.length > 0,
-        showNoResult: false,
-        showLoadEnd: !hasMore && filtered.length > 0,
-      })
-    } catch (err: any) {
-      this.setData({
-        error: err.message || '加载失败',
-        isLoading: false,
-        isList: false,
-      })
-    }
-  },
-
-  /** 加载更多（下一页） */
-  async loadMore() {
-    const cred = getActiveCredential()
-    if (!cred || this.data.isLoadingMore) return
-
-    const nextPage = this.data.page + 1
-    this.setData({ isLoadingMore: true })
-
-    try {
-      const { repos, hasMore } = await fetchReposPage(cred, nextPage, this.data.perPage)
-      const newDisplay = repos.map(r => toDisplayRepo(r))
-      const merged = [...this.data.repos, ...newDisplay]
-      const filtered = this.applyFilter(merged, this.data.searchKey)
-
-      this.setData({
-        page: nextPage,
-        repos: merged,
-        filteredRepos: filtered,
-        hasMore,
-        isLoadingMore: false,
-        showLoadEnd: !hasMore && filtered.length > 0,
-      })
-    } catch (err: any) {
-      this.setData({ isLoadingMore: false })
-      wx.showToast({ title: err.message || '加载失败', icon: 'none' })
-    }
-  },
-
-  /** 搜索输入 */
-  onSearchInput(e: WechatMiniprogram.Input.Input) {
-    const key = e.detail.value
-    const filtered = this.applyFilter(this.data.repos, key)
-    const hasKey = key.trim().length > 0
-    this.setData({
-      searchKey: key,
-      filteredRepos: filtered,
-      showNoResult: hasKey && filtered.length === 0 && !this.data.error,
-    })
-  },
-
-  /** 清空搜索 */
-  onClearSearch() {
-    this.setData({
-      searchKey: '',
-      filteredRepos: this.data.repos,
-      showNoResult: false,
-    })
-  },
-
-  applyFilter(repos: RepoDisplay[], key: string): RepoDisplay[] {
-    if (!key.trim()) return repos
-    const k = key.toLowerCase()
-    return repos.filter(
-      r =>
-        r.name.toLowerCase().includes(k) ||
-        r.fullName.toLowerCase().includes(k) ||
-        (r.description && r.description.toLowerCase().includes(k)),
-    )
-  },
-
-  /** 去凭据管理页 */
-  goToAccount() {
-    wx.navigateTo({ url: '/pages/git/credential/page' })
-  },
-
-  /** 进入仓库详情 */
-  onRepoTap(e: WechatMiniprogram.TouchEvent) {
-    const repo = e.currentTarget.dataset.repo as RepoDisplay
-    const owner = repo.fullName.split('/')[0]
-    wx.navigateTo({
-      url: `/pages/git/repo/page?platform=${repo.platform}&owner=${owner}&repo=${repo.name}`,
-    })
-  },
-})
-
 /** 将 GitRepo 转为显示用对象 */
 function toDisplayRepo(r: GitRepo): RepoDisplay {
   return {
@@ -247,3 +50,212 @@ function toDisplayRepo(r: GitRepo): RepoDisplay {
     updatedAtFormatted: formatTime(r.updatedAt),
   }
 }
+
+export default definePage(() => {
+  // ======================== 响应式状态 ========================
+
+  // 活跃凭证
+  const activeCred = ref<GitCredential | null>(null)
+  const activeCredId = ref('')
+  const accountName = ref('')
+  const accountPlatform = ref('')
+  const accountPlatformLabel = ref('')
+  const accountPlatformColor = ref('')
+  const accountInitial = ref('')
+
+  // 仓库列表
+  const repos = ref<RepoDisplay[]>([])
+  const searchKey = ref('')
+
+  // 分页
+  const page = ref(1)
+  const perPage = 10
+  const hasMore = ref(false)
+
+  // 状态
+  const error = ref('')
+  const isEmpty = ref(true)
+  const isLoading = ref(false)
+  const isList = ref(false)
+  const isLoadingMore = ref(false)
+  const showNoResult = ref(false)
+  const showLoadEnd = ref(false)
+
+  // ======================== 计算属性 ========================
+
+  /** 根据 searchKey 自动过滤仓库列表 */
+  const filteredRepos = computed(() => {
+    const key = searchKey.value.trim()
+    if (!key) return repos.value
+    const k = key.toLowerCase()
+    return repos.value.filter(
+      r =>
+        r.name.toLowerCase().includes(k) ||
+        r.fullName.toLowerCase().includes(k) ||
+        (r.description && r.description.toLowerCase().includes(k)),
+    )
+  })
+
+  // ======================== 核心逻辑 ========================
+
+  function initActiveCred() {
+    let cred = getActiveCredential()
+    const allCreds = getCredentials()
+
+    if (!cred && allCreds.length > 0) {
+      cred = allCreds[0]
+      setActiveCredentialId(cred.id)
+    }
+
+    if (!cred) {
+      activeCred.value = null
+      activeCredId.value = ''
+      accountName.value = ''
+      accountPlatformLabel.value = ''
+      isEmpty.value = true
+      isList.value = false
+      repos.value = []
+      return
+    }
+
+    const platformConfig = getPlatformConfig(cred.platform)!
+    const displayUsername = cred.resolvedUsername || cred.username || '未验证'
+
+    activeCred.value = cred
+    activeCredId.value = cred.id
+    accountName.value = cred.name
+    accountPlatform.value = cred.platform
+    accountPlatformLabel.value = platformConfig.label
+    accountPlatformColor.value = platformConfig.color
+    accountInitial.value = displayUsername ? displayUsername[0].toUpperCase() : '?'
+    isEmpty.value = false
+    error.value = ''
+
+    loadRepos()
+  }
+
+  async function loadRepos() {
+    const cred = getActiveCredential()
+    if (!cred) return
+
+    isLoading.value = true
+    error.value = ''
+    showNoResult.value = false
+    try {
+      const { repos: rawRepos, hasMore: more } = await fetchReposPage(cred, 1, perPage)
+      const displayRepos = rawRepos.map(r => toDisplayRepo(r))
+      page.value = 1
+      repos.value = displayRepos
+      hasMore.value = more
+      isLoading.value = false
+      isList.value = displayRepos.length > 0
+      showNoResult.value = false
+      showLoadEnd.value = !more && displayRepos.length > 0
+    } catch (err: any) {
+      error.value = err.message || '加载失败'
+      isLoading.value = false
+      isList.value = false
+    }
+  }
+
+  async function loadMore() {
+    const cred = getActiveCredential()
+    if (!cred || isLoadingMore.value) return
+
+    const nextPage = page.value + 1
+    isLoadingMore.value = true
+
+    try {
+      const { repos: newRepos, hasMore: more } = await fetchReposPage(cred, nextPage, perPage)
+      const newDisplay = newRepos.map(r => toDisplayRepo(r))
+      const merged = [...repos.value, ...newDisplay]
+      page.value = nextPage
+      repos.value = merged
+      hasMore.value = more
+      isLoadingMore.value = false
+      showLoadEnd.value = !more
+    } catch (err: any) {
+      isLoadingMore.value = false
+      wx.showToast({ title: err.message || '加载失败', icon: 'none' })
+    }
+  }
+
+  // ======================== 事件处理 ========================
+
+  function onSearchInput(e: WechatMiniprogram.Input) {
+    const key = e.detail.value
+    searchKey.value = key
+    const hasKey = key.trim().length > 0
+    // filteredRepos 是 computed，会自动更新；这里手动更新 showNoResult
+    const filtered = filteredRepos.value
+    showNoResult.value = hasKey && filtered.length === 0 && !error.value
+  }
+
+  function onClearSearch() {
+    searchKey.value = ''
+    showNoResult.value = false
+  }
+
+  function goToAccount() {
+    wx.navigateTo({ url: '/pages/git/credential/page' })
+  }
+
+  function onRepoTap(e: WechatMiniprogram.TouchEvent) {
+    const repo = e.currentTarget.dataset.repo as RepoDisplay
+    const owner = repo.fullName.split('/')[0]
+    wx.navigateTo({
+      url: `/pages/git/repo/page?platform=${repo.platform}&owner=${owner}&repo=${repo.name}`,
+    })
+  }
+
+  // ======================== 生命周期 ========================
+
+  onShow(() => {
+    initActiveCred()
+  })
+
+  onPullDownRefresh(() => {
+    loadRepos().finally(() => {
+      wx.stopPullDownRefresh()
+    })
+  })
+
+  onReachBottom(() => {
+    if (hasMore.value && !isLoadingMore.value) {
+      loadMore()
+    }
+  })
+
+  // ======================== 导出到模板 ========================
+
+  return {
+    // 状态（非函数值 → 自动同步到 data）
+    activeCred,
+    activeCredId,
+    accountName,
+    accountPlatform,
+    accountPlatformLabel,
+    accountPlatformColor,
+    accountInitial,
+    repos,
+    searchKey,
+    page,
+    hasMore,
+    error,
+    isEmpty,
+    isLoading,
+    isList,
+    isLoadingMore,
+    showNoResult,
+    showLoadEnd,
+    filteredRepos,
+
+    // 方法（函数值 → 自动绑定为页面方法）
+    onSearchInput,
+    onClearSearch,
+    goToAccount,
+    onRepoTap,
+    loadRepos,
+    loadMore,
+  }
+})

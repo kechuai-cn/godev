@@ -21,7 +21,6 @@
     </navigator>
   </view>
 
-  <!-- 底部版本信息 -->
   <view class="footer">v0.1.0</view>
 
 </view>

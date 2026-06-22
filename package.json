@@ -7,5 +7,8 @@
     "@jihe/prettier": "^1.0.0",
     "miniprogram-api-typings": "^2.8.3-1"
   },
-  "prettier": "@jihe/prettier"
+  "prettier": "@jihe/prettier",
+  "dependencies": {
+    "@vue-mini/core": "^1.2.11"
+  }
 }

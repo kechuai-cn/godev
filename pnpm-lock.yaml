@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@vue-mini/core':
+        specifier: ^1.2.11
+        version: 1.2.11
     devDependencies:
       '@jihe/prettier':
         specifier: ^1.0.0
@@ -20,11 +24,36 @@ packages:
   '@jihe/prettier@1.0.0':
     resolution: {integrity: sha512-j8vT4hrDhs3FaSDOFnOIrveHhxibLaQioQxrcezJIjEXKSTZyWOrjJ2JROPq9P9OocgCRMcIrod73oI2fnU3jg==}
 
+  '@vue-mini/core@1.2.11':
+    resolution: {integrity: sha512-C0d8fG0ZkCk+heBxiSVYzXfZHSf7x+7aR7XhVhBxZnIInBKPIIODGSArsLBCjydlRTQL4DsUGaCTkF93Ruc2hw==}
+
+  '@vue/reactivity@3.5.33':
+    resolution: {integrity: sha512-p8UfIqyIhb0rYGlSgSBV+lPhF2iUSBcRy7enhTmPqKWadHy9kcOFYF1AejYBP9P+avnd3OBbD49DU4pLWX/94A==}
+
+  '@vue/shared@3.5.33':
+    resolution: {integrity: sha512-5vR2QIlmaLG77Ygd4pMP6+SGQ5yox9VhtnbDWTy9DzMzdmeLxZ1QqxrywEZ9sa1AVubfIJyaCG3ytyWU81ufcQ==}
+
   miniprogram-api-typings@2.12.0:
     resolution: {integrity: sha512-ibvbqeslVFur0IAvTxLMvsbtvVcMo6gwvOnj0YZHV7aeDLu091VQRrETT2QuiG9P6aZWRcxeNGJChRKVPCp9VQ==}
+
+  miniprogram-api-typings@4.0.8:
+    resolution: {integrity: sha512-q3MHCd/r0EsCFsq+nebbBbpwhsQbJg2d8lvRdRBV4KXgp+S1OzzNFpjFoy1X46NA01OD0fbCnxo7tJRSE2pqSw==}
 
 snapshots:
 
   '@jihe/prettier@1.0.0': {}
 
+  '@vue-mini/core@1.2.11':
+    dependencies:
+      '@vue/reactivity': 3.5.33
+      miniprogram-api-typings: 4.0.8
+
+  '@vue/reactivity@3.5.33':
+    dependencies:
+      '@vue/shared': 3.5.33
+
+  '@vue/shared@3.5.33': {}
+
   miniprogram-api-typings@2.12.0: {}
+
+  miniprogram-api-typings@4.0.8: {}

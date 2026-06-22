@@ -1,10 +1,10 @@
 // pages/git/credential-edit/page.ts
+import { definePage, ref, computed } from '@vue-mini/core'
 import {
   getCredentials,
   addCredential,
   updateCredential,
   PLATFORMS,
-  AUTH_TYPES,
   getPlatformConfig,
   getAuthTypeConfig,
   testConnection,
@@ -13,303 +13,240 @@ import {
   AuthType,
 } from '../../../utils/git-api'
 
-Page({
-  data: {
-    isEdit: false,
-    credentialId: '',
-    platform: 'github' as PlatformType,
-    authType: 'access_token' as AuthType,
-    name: '',
-    token: '',
-    username: '',
-    password: '',
-    baseUrl: '',
-    saving: false,
-    showSecret: false,
-    // 测试连接状态
-    testStatus: 'idle' as 'idle' | 'testing' | 'success' | 'fail',
-    testMessage: '',
-    testUsername: '',
-    canSave: false,
-    // 预计算（WXML 不支持复杂表达式）
-    platformLabel: 'GitHub',
-    platformIndex: 0,
-    authTypeLabel: 'Access Token',
-    authTypeIndex: 0,
-    availableAuthTypes: [] as { value: string; label: string }[],
-    availableAuthTypeLabels: [] as string[],
-    showTokenField: false,
-    showUserPassFields: false,
-    showBaseUrlField: false,
-    // WXML 预计算字段
-    secretBtnText: '显示',
-    testBtnClass: '',
-    saveBtnClass: 'btn-disabled',
-    saveBtnText: '添加凭证',
-    isTesting: false,
-    isSuccess: false,
-    isFail: false,
-    platforms: PLATFORMS.map(p => ({ value: p.value, label: p.label })),
-    platformLabels: PLATFORMS.map(p => p.label),
-  },
+export default definePage((query: Record<string, string | undefined>) => {
+  // ======================== 基础状态 ========================
 
-  onLoad(options: any) {
-    const isEdit = !!options.id
-    this.setData({
-      isEdit,
-      saveBtnText: isEdit ? '保存修改' : '添加凭证',
-    })
-    if (options.platform) {
-      this.setPlatform(options.platform)
-    }
-    if (options.id) {
-      this.loadCredential(options.id)
-    }
-  },
+  const isEdit = !!query.id
+  const credentialId = ref(query.id || '')
 
-  /** 切换平台 */
-  onPlatformChange(e: WechatMiniprogram.Picker.Change) {
-    const idx = Number(e.detail.value)
-    const platform = PLATFORMS[idx].value
-    this.setPlatform(platform)
-  },
+  const platform = ref<PlatformType>('github')
+  const authType = ref<AuthType>('access_token')
+  const name = ref('')
+  const token = ref('')
+  const username = ref('')
+  const password = ref('')
+  const baseUrl = ref('')
+  const saving = ref(false)
+  const showSecret = ref(false)
 
-  /** 设置平台 + 联动认证方式 */
-  setPlatform(platform: PlatformType) {
-    const config = getPlatformConfig(platform)
-    if (!config) return
-    const idx = PLATFORMS.findIndex(p => p.value === platform)
+  // 测试连接
+  const testStatus = ref<'idle' | 'testing' | 'success' | 'fail'>('idle')
+  const testMessage = ref('')
+  const testUsername = ref('')
+  const canSave = ref(false)
 
-    // 获取该平台支持的认证方式
-    const availableAuthTypes = config.authTypes.map(at => {
+  // ======================== 计算属性 ========================
+
+  const platformConfig = computed(() => getPlatformConfig(platform.value)!)
+
+  const platformLabel = computed(() => platformConfig.value.label)
+  const platformIndex = computed(() => PLATFORMS.findIndex(p => p.value === platform.value))
+
+  const availableAuthTypes = computed(() =>
+    platformConfig.value.authTypes.map(at => {
       const atConfig = getAuthTypeConfig(at)!
       return { value: at, label: atConfig.label }
-    })
-    const availableAuthTypeLabels = availableAuthTypes.map(a => a.label)
+    }),
+  )
+  const availableAuthTypeLabels = computed(() => availableAuthTypes.value.map(a => a.label))
+  const authTypeLabel = computed(() => {
+    const at = availableAuthTypes.value.find(a => a.value === authType.value)
+    return at?.label || getAuthTypeConfig(authType.value)?.label || ''
+  })
+  const authTypeIndex = computed(() => availableAuthTypes.value.findIndex(a => a.value === authType.value))
 
-    // 如果当前 authType 不在新平台的支持列表里，切到第一个
-    let authType = this.data.authType
-    if (!config.authTypes.includes(authType)) {
-      authType = config.authTypes[0]
+  const showTokenField = computed(() => authType.value === 'access_token')
+  const showUserPassFields = computed(() => authType.value === 'username_password')
+  const showBaseUrlField = computed(() => platformConfig.value.needsBaseUrl)
+
+  const secretBtnText = computed(() => (showSecret.value ? '隐藏' : '显示'))
+  const saveBtnText = computed(() => (isEdit ? '保存修改' : '添加凭证'))
+
+  const isTesting = computed(() => testStatus.value === 'testing')
+  const isSuccess = computed(() => testStatus.value === 'success')
+  const isFail = computed(() => testStatus.value === 'fail')
+
+  const testBtnClass = computed(() => (testStatus.value === 'testing' ? 'btn-disabled' : ''))
+  const saveBtnClass = computed(() => (canSave.value ? '' : 'btn-disabled'))
+
+  // picker 静态数据
+  const platforms = PLATFORMS.map(p => ({ value: p.value, label: p.label }))
+  const platformLabels = PLATFORMS.map(p => p.label)
+
+  // ======================== 初始化 ========================
+
+  function initPlatform(p: string) {
+    const config = getPlatformConfig(p as PlatformType)
+    if (!config) return
+    platform.value = p as PlatformType
+    // 如果当前 authType 不在新平台支持列表里，切到第一个
+    if (!config.authTypes.includes(authType.value)) {
+      authType.value = config.authTypes[0]
     }
+    resetTest()
+  }
 
-    this.setData({
-      platform,
-      platformLabel: config.label,
-      platformIndex: idx,
-      availableAuthTypes,
-      availableAuthTypeLabels,
-    })
-    this.setAuthType(authType)
-    this.resetTest()
-  },
-
-  /** 切换认证方式 */
-  onAuthTypeChange(e: WechatMiniprogram.Picker.Change) {
-    const idx = Number(e.detail.value)
-    const authType = this.data.availableAuthTypes[idx].value as AuthType
-    this.setAuthType(authType)
-  },
-
-  setAuthType(authType: AuthType) {
-    const config = getAuthTypeConfig(authType)
-    const idx = this.data.availableAuthTypes.findIndex(a => a.value === authType)
-    const platformConfig = getPlatformConfig(this.data.platform)!
-    this.setData({
-      authType,
-      authTypeLabel: config?.label || '',
-      authTypeIndex: idx >= 0 ? idx : 0,
-      showTokenField: authType === 'access_token',
-      showUserPassFields: authType === 'username_password',
-      showBaseUrlField: platformConfig.needsBaseUrl,
-    })
-    this.resetTest()
-  },
-
-  /** 加载已有凭证（编辑模式） */
-  loadCredential(id: string) {
+  function loadCredential(id: string) {
     const cred = getCredentials().find(c => c.id === id)
     if (!cred) return
-    this.setPlatform(cred.platform)
-    this.setAuthType(cred.authType)
-    this.setData({
-      isEdit: true,
-      credentialId: id,
-      name: cred.name,
-      token: cred.token || '',
-      username: cred.username || '',
-      password: cred.password || '',
-      baseUrl: cred.baseUrl || '',
-    })
-  },
+    initPlatform(cred.platform)
+    authType.value = cred.authType
+    credentialId.value = id
+    name.value = cred.name
+    token.value = cred.token || ''
+    username.value = cred.username || ''
+    password.value = cred.password || ''
+    baseUrl.value = cred.baseUrl || ''
+  }
 
-  onNameInput(e: WechatMiniprogram.Input.Input) {
-    this.setData({ name: e.detail.value })
-    this.resetTest()
-  },
+  if (query.platform) {
+    initPlatform(query.platform)
+  }
+  if (query.id) {
+    loadCredential(query.id)
+  }
 
-  onTokenInput(e: WechatMiniprogram.Input.Input) {
-    this.setData({ token: e.detail.value })
-    this.resetTest()
-  },
+  // ======================== 事件处理 ========================
 
-  onUsernameInput(e: WechatMiniprogram.Input.Input) {
-    this.setData({ username: e.detail.value })
-    this.resetTest()
-  },
+  function onPlatformChange(e: WechatMiniprogram.Picker.Change) {
+    const idx = Number(e.detail.value)
+    const p = PLATFORMS[idx].value
+    initPlatform(p)
+  }
 
-  onPasswordInput(e: WechatMiniprogram.Input.Input) {
-    this.setData({ password: e.detail.value })
-    this.resetTest()
-  },
-
-  onBaseUrlInput(e: WechatMiniprogram.Input.Input) {
-    this.setData({ baseUrl: e.detail.value })
-    this.resetTest()
-  },
-
-  toggleSecret() {
-    const show = !this.data.showSecret
-    this.setData({
-      showSecret: show,
-      secretBtnText: show ? '隐藏' : '显示',
-    })
-  },
-
-  /** 修改任何字段后重置测试状态 */
-  resetTest() {
-    if (this.data.testStatus !== 'idle') {
-      this.setData({
-        testStatus: 'idle',
-        testMessage: '',
-        testUsername: '',
-        canSave: false,
-        testBtnClass: '',
-        saveBtnClass: 'btn-disabled',
-        isTesting: false,
-        isSuccess: false,
-        isFail: false,
-      })
+  function onAuthTypeChange(e: WechatMiniprogram.Picker.Change) {
+    const idx = Number(e.detail.value)
+    const at = availableAuthTypes.value[idx]?.value
+    if (at) {
+      authType.value = at
+      resetTest()
     }
-  },
+  }
 
-  /** 测试连接 */
-  async onTest() {
-    if (!this.validate()) return
-    this.setData({
-      testStatus: 'testing',
-      testMessage: '',
-      testUsername: '',
-      canSave: false,
-      testBtnClass: 'btn-disabled',
-      saveBtnClass: 'btn-disabled',
-      isTesting: true,
-      isSuccess: false,
-      isFail: false,
-    })
-    const { platform, authType, name, token, username, password, baseUrl } = this.data
+  function onNameInput(e: WechatMiniprogram.Input) {
+    name.value = e.detail.value
+    resetTest()
+  }
 
-    // 构建临时凭证对象（不保存）
-    const cred: GitCredential = {
-      id: 'temp',
-      platform,
-      authType,
-      name: name.trim(),
-    }
-    if (authType === 'access_token') cred.token = token.trim()
-    if (authType === 'username_password') {
-      cred.username = username.trim()
-      cred.password = password.trim()
-    }
-    const platformConfig = getPlatformConfig(platform)!
-    if (platformConfig.needsBaseUrl) {
-      cred.baseUrl = baseUrl.trim().replace(/\/+$/, '')
-    }
+  function onTokenInput(e: WechatMiniprogram.Input) {
+    token.value = e.detail.value
+    resetTest()
+  }
 
-    const result = await testConnection(cred)
-    if (result.success) {
-      this.setData({
-        testStatus: 'success',
-        testMessage: '连接成功',
-        testUsername: result.username || '',
-        canSave: true,
-        testBtnClass: '',
-        saveBtnClass: '',
-        isTesting: false,
-        isSuccess: true,
-        isFail: false,
-      })
-    } else {
-      this.setData({
-        testStatus: 'fail',
-        testMessage: result.message,
-        canSave: false,
-        testBtnClass: '',
-        saveBtnClass: 'btn-disabled',
-        isTesting: false,
-        isSuccess: false,
-        isFail: true,
-      })
-    }
-  },
+  function onUsernameInput(e: WechatMiniprogram.Input) {
+    username.value = e.detail.value
+    resetTest()
+  }
 
-  /** 表单校验 */
-  validate(): boolean {
-    const { name, platform, authType, token, username, password, baseUrl } = this.data
-    if (!name.trim()) {
+  function onPasswordInput(e: WechatMiniprogram.Input) {
+    password.value = e.detail.value
+    resetTest()
+  }
+
+  function onBaseUrlInput(e: WechatMiniprogram.Input) {
+    baseUrl.value = e.detail.value
+    resetTest()
+  }
+
+  function toggleSecret() {
+    showSecret.value = !showSecret.value
+  }
+
+  function resetTest() {
+    if (testStatus.value !== 'idle') {
+      testStatus.value = 'idle'
+      testMessage.value = ''
+      testUsername.value = ''
+      canSave.value = false
+    }
+  }
+
+  // ======================== 核心逻辑 ========================
+
+  function validate(): boolean {
+    if (!name.value.trim()) {
       wx.showToast({ title: '请输入备注名称', icon: 'none' })
       return false
     }
-    const platformConfig = getPlatformConfig(platform)!
-    if (platformConfig.needsBaseUrl && !baseUrl.trim()) {
+    if (platformConfig.value.needsBaseUrl && !baseUrl.value.trim()) {
       wx.showToast({ title: '请输入服务器地址', icon: 'none' })
       return false
     }
-    if (authType === 'access_token' && !token.trim()) {
+    if (authType.value === 'access_token' && !token.value.trim()) {
       wx.showToast({ title: '请输入 Access Token', icon: 'none' })
       return false
     }
-    if (authType === 'username_password') {
-      if (!username.trim()) {
+    if (authType.value === 'username_password') {
+      if (!username.value.trim()) {
         wx.showToast({ title: '请输入用户名', icon: 'none' })
         return false
       }
-      if (!password.trim()) {
+      if (!password.value.trim()) {
         wx.showToast({ title: '请输入密码', icon: 'none' })
         return false
       }
     }
     return true
-  },
+  }
 
-  /** 保存 */
-  async onSave() {
-    if (!this.data.canSave) {
+  async function onTest() {
+    if (!validate()) return
+    testStatus.value = 'testing'
+    testMessage.value = ''
+    testUsername.value = ''
+    canSave.value = false
+
+    const cred: GitCredential = {
+      id: 'temp',
+      platform: platform.value,
+      authType: authType.value,
+      name: name.value.trim(),
+    }
+    if (authType.value === 'access_token') cred.token = token.value.trim()
+    if (authType.value === 'username_password') {
+      cred.username = username.value.trim()
+      cred.password = password.value.trim()
+    }
+    if (platformConfig.value.needsBaseUrl) {
+      cred.baseUrl = baseUrl.value.trim().replace(/\/+$/, '')
+    }
+
+    const result = await testConnection(cred)
+    if (result.success) {
+      testStatus.value = 'success'
+      testMessage.value = '连接成功'
+      testUsername.value = result.username || ''
+      canSave.value = true
+    } else {
+      testStatus.value = 'fail'
+      testMessage.value = result.message
+      canSave.value = false
+    }
+  }
+
+  async function onSave() {
+    if (!canSave.value) {
       wx.showToast({ title: '请先测试连接', icon: 'none' })
       return
     }
-    if (!this.validate()) return
-    const { isEdit, credentialId, platform, authType, name, token, username, password, baseUrl, testUsername } = this.data
-
-    this.setData({ saving: true })
+    if (!validate()) return
+    saving.value = true
     try {
       const cred: GitCredential = {
-        id: isEdit ? credentialId : Date.now().toString(),
-        platform,
-        authType,
-        name: name.trim(),
-        resolvedUsername: testUsername,
+        id: isEdit ? credentialId.value : Date.now().toString(),
+        platform: platform.value,
+        authType: authType.value,
+        name: name.value.trim(),
+        resolvedUsername: testUsername.value,
       }
-      if (authType === 'access_token') cred.token = token.trim()
-      if (authType === 'username_password') {
-        cred.username = username.trim()
-        cred.password = password.trim()
+      if (authType.value === 'access_token') cred.token = token.value.trim()
+      if (authType.value === 'username_password') {
+        cred.username = username.value.trim()
+        cred.password = password.value.trim()
       }
-      const platformConfig = getPlatformConfig(platform)!
-      if (platformConfig.needsBaseUrl) {
-        cred.baseUrl = baseUrl.trim().replace(/\/+$/, '')
+      if (platformConfig.value.needsBaseUrl) {
+        cred.baseUrl = baseUrl.value.trim().replace(/\/+$/, '')
       }
-
       if (isEdit) {
         updateCredential(cred)
       } else {
@@ -318,7 +255,57 @@ Page({
       wx.showToast({ title: '保存成功', icon: 'success' })
       setTimeout(() => wx.navigateBack(), 800)
     } finally {
-      this.setData({ saving: false })
+      saving.value = false
     }
-  },
+  }
+
+  // ======================== 导出到模板 ========================
+
+  return {
+    // 基础状态
+    isEdit,
+    credentialId,
+    platform,
+    authType,
+    name,
+    token,
+    username,
+    password,
+    baseUrl,
+    saving,
+    showSecret,
+    testStatus,
+    testMessage,
+    testUsername,
+    canSave,
+    // 计算属性
+    platformLabel,
+    platformIndex,
+    availableAuthTypes,
+    availableAuthTypeLabels,
+    authTypeLabel,
+    authTypeIndex,
+    showTokenField,
+    showUserPassFields,
+    showBaseUrlField,
+    secretBtnText,
+    saveBtnText,
+    isTesting,
+    isSuccess,
+    isFail,
+    testBtnClass,
+    saveBtnClass,
+    platformLabels,
+    // 方法
+    onPlatformChange,
+    onAuthTypeChange,
+    onNameInput,
+    onTokenInput,
+    onUsernameInput,
+    onPasswordInput,
+    onBaseUrlInput,
+    toggleSecret,
+    onTest,
+    onSave,
+  }
 })
