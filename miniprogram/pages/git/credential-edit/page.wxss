@@ -2,167 +2,237 @@
 
 .container {
   min-height: 100vh;
-  background: #f5f6fa;
-  padding: 24rpx;
+  background:
+    radial-gradient(circle at top, rgba(46, 79, 177, 0.24), transparent 30%),
+    linear-gradient(180deg, #06102a 0%, #07112a 52%, #09101f 100%);
 }
 
-/* =================== Form =================== */
-.form-section {
-  background: #ffffff;
-  border-radius: 20rpx;
-  padding: 24rpx;
-  margin-bottom: 16rpx;
+.page-shell {
+  padding: 24rpx 24rpx 40rpx;
 }
 
-.section-label {
-  font-size: 24rpx;
-  color: #888;
-  font-weight: 500;
+.form-card {
+  background: rgba(8, 17, 41, 0.92);
+  border: 1rpx solid rgba(255, 255, 255, 0.05);
+  border-radius: 30rpx;
+  padding: 18rpx 20rpx 24rpx;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.2);
+}
+
+.field-group {
+  margin-bottom: 26rpx;
+}
+
+.field-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.form-label {
   display: block;
-  margin-bottom: 12rpx;
+  margin: 0 4rpx 14rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: rgba(244, 247, 255, 0.92);
+  letter-spacing: 1rpx;
+}
+
+.form-input,
+.form-picker {
+  min-height: 84rpx;
+  border-radius: 22rpx;
+  background: rgba(21, 31, 61, 0.96);
+  border: 1rpx solid rgba(255, 255, 255, 0.08);
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  color: #f4f7ff;
+  box-sizing: border-box;
 }
 
 .form-input {
-  background: #f5f6fa;
-  border-radius: 12rpx;
-  padding: 18rpx 20rpx;
-  font-size: 28rpx;
-  color: #1c1e21;
+  display: block;
+  width: 100%;
+  padding-top: 22rpx;
+  padding-bottom: 22rpx;
 }
 
 .form-picker {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f5f6fa;
-  border-radius: 12rpx;
-  padding: 18rpx 20rpx;
-  font-size: 28rpx;
-  color: #1c1e21;
+}
+
+.picker-value {
+  color: #f4f7ff;
 }
 
 .picker-arrow {
-  color: #b0b3b8;
   font-size: 24rpx;
+  color: rgba(208, 221, 255, 0.6);
 }
 
-.toggle-pwd {
-  margin-top: 12rpx;
-  align-self: flex-end;
+.form-placeholder {
+  color: rgba(208, 221, 255, 0.34);
 }
 
-.toggle-pwd text {
-  font-size: 24rpx;
-  color: #1a73e8;
+.secure-input {
+  position: relative;
 }
 
-/* =================== Tip =================== */
-.form-tip {
-  padding: 16rpx 8rpx;
+.form-input--secure {
+  padding-right: 120rpx;
 }
 
-.form-tip text {
-  font-size: 22rpx;
-  color: #b0b3b8;
-  line-height: 1.6;
-}
-
-/* =================== Hint =================== */
-.form-hint {
-  font-size: 22rpx;
-  color: #b0b3b8;
-  margin-top: 8rpx;
-  display: block;
-}
-
-/* =================== Test Button =================== */
-.test-btn {
-  margin-top: 16rpx;
-  background: #ffffff;
-  color: #1a73e8;
-  font-size: 28rpx;
-  font-weight: 600;
-  text-align: center;
-  padding: 20rpx;
-  border-radius: 20rpx;
-  border: 2rpx solid #1a73e8;
-}
-
-/* =================== Test Result =================== */
-.test-result {
+.secret-btn {
+  position: absolute;
+  right: 16rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 76rpx;
+  height: 52rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
   display: flex;
   align-items: center;
-  margin-top: 16rpx;
-  padding: 20rpx 24rpx;
-  border-radius: 16rpx;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.secret-btn text {
+  font-size: 22rpx;
+  color: rgba(233, 239, 255, 0.88);
+}
+
+.field-tip {
+  display: block;
+  margin: 12rpx 6rpx 0;
+  font-size: 20rpx;
+  line-height: 1.6;
+  color: rgba(208, 221, 255, 0.48);
+}
+
+.section-divider {
+  height: 1rpx;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 30rpx 4rpx;
+}
+
+.security-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18rpx;
+  margin-top: 18rpx;
+  padding: 24rpx;
+  border-radius: 26rpx;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.security-icon {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(140, 167, 239, 0.12);
+  flex-shrink: 0;
+}
+
+.security-icon text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #cbd8ff;
+}
+
+.security-text {
+  flex: 1;
+  font-size: 24rpx;
+  line-height: 1.55;
+  color: rgba(232, 238, 255, 0.66);
+}
+
+.test-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-top: 20rpx;
+  padding: 22rpx 24rpx;
+  border-radius: 22rpx;
 }
 
 .test-success {
-  background: #f0fdf4;
+  background: rgba(42, 120, 88, 0.18);
+  border: 1rpx solid rgba(91, 201, 148, 0.16);
 }
 
 .test-fail {
-  background: #fef2f2;
+  background: rgba(165, 63, 74, 0.16);
+  border: 1rpx solid rgba(255, 133, 145, 0.14);
 }
 
 .test-icon {
-  font-size: 32rpx;
+  min-width: 44rpx;
+  font-size: 22rpx;
   font-weight: 700;
-  margin-right: 16rpx;
+  line-height: 1.5;
 }
 
-.test-success .test-icon {
-  color: #16a34a;
-}
-
-.test-fail .test-icon {
-  color: #dc2626;
-}
-
-.test-info {
+.test-copy {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .test-msg {
-  font-size: 26rpx;
-  font-weight: 600;
-}
-
-.test-success .test-msg {
-  color: #16a34a;
-}
-
-.test-fail .test-msg {
-  color: #dc2626;
+  font-size: 24rpx;
+  line-height: 1.5;
 }
 
 .test-user {
-  font-size: 24rpx;
-  margin-top: 4rpx;
+  margin-top: 6rpx;
+  font-size: 22rpx;
 }
 
+.test-success .test-icon,
+.test-success .test-msg,
 .test-success .test-user {
-  color: #15803d;
+  color: #84e0af;
 }
 
+.test-fail .test-icon,
+.test-fail .test-msg,
 .test-fail .test-user {
-  color: #b91c1c;
+  color: #ff9da7;
 }
 
-/* =================== Save Button =================== */
+.action-section {
+  margin-top: 32rpx;
+}
+
+.test-btn,
 .save-btn {
-  margin-top: 40rpx;
-  background: #f4430c;
-  color: #ffffff;
+  min-height: 92rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 30rpx;
-  font-weight: 600;
-  text-align: center;
-  padding: 24rpx;
-  border-radius: 20rpx;
-  box-shadow: 0 8rpx 24rpx rgba(244, 67, 12, 0.3);
+  font-weight: 700;
+}
+
+.test-btn {
+  margin-bottom: 20rpx;
+  background: rgba(19, 30, 58, 0.96);
+  border: 1rpx solid rgba(173, 192, 247, 0.18);
+  color: #dbe5ff;
+  box-shadow: 0 10rpx 28rpx rgba(0, 0, 0, 0.12);
+}
+
+.save-btn {
+  background: linear-gradient(180deg, #b9c8f4 0%, #a9bbec 100%);
+  color: #0f2f69;
+  box-shadow: 0 12rpx 28rpx rgba(111, 144, 228, 0.28);
 }
 
 .btn-disabled {
-  opacity: 0.5;
+  opacity: 0.48;
 }

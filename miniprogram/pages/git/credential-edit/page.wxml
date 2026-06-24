@@ -1,117 +1,132 @@
+<!-- pages/git/credential-edit/page.wxml -->
 <view class="container">
-
-  <view class="form-section">
-    <text class="form-label">名称</text>
-    <input
-      class="form-input"
-      placeholder="给这个账号起个名字"
-      value="{{name}}"
-      bindinput="onNameInput"
-    />
-  </view>
-
-  <view class="form-section">
-    <text class="form-label">平台</text>
-    <picker mode="selector" range="{{platformLabels}}" value="{{platformIndex}}" bindchange="onPlatformChange">
-      <view class="form-picker">
-        <text>{{platformLabel}}</text>
-        <text class="picker-arrow">▸</text>
-      </view>
-    </picker>
-  </view>
-
-  <view class="form-section">
-    <text class="form-label">认证方式</text>
-    <picker mode="selector" range="{{availableAuthTypeLabels}}" value="{{authTypeIndex}}" bindchange="onAuthTypeChange">
-      <view class="form-picker">
-        <text>{{authTypeLabel}}</text>
-        <text class="picker-arrow">▸</text>
-      </view>
-    </picker>
-  </view>
-
-  <view class="form-section" wx:if="{{showTokenField}}">
-    <text class="form-label">Access Token</text>
-    <view class="input-row">
-      <input
-        class="form-input"
-        placeholder="粘贴你的 Access Token"
-        value="{{token}}"
-        password="{{!showSecret}}"
-        bindinput="onTokenInput"
-      />
-      <view class="secret-btn" bindtap="toggleSecret">
-        <text>{{secretBtnText}}</text>
-      </view>
-    </view>
-  </view>
-
-  <block wx:if="{{showUserPassFields}}">
-    <view class="form-section">
-      <text class="form-label">用户名</text>
-      <input
-        class="form-input"
-        placeholder="Git 用户名"
-        value="{{username}}"
-        bindinput="onUsernameInput"
-      />
-    </view>
-    <view class="form-section">
-      <text class="form-label">密码</text>
-      <view class="input-row">
+  <view class="page-shell">
+    <view class="form-card">
+      <view class="field-group">
+        <text class="form-label">凭证名称</text>
         <input
           class="form-input"
-          placeholder="密码 / 个人访问令牌"
-          value="{{password}}"
-          password="{{!showSecret}}"
-          bindinput="onPasswordInput"
+          placeholder="例如：个人工作令牌"
+          placeholder-class="form-placeholder"
+          value="{{name}}"
+          bindinput="onNameInput"
         />
-        <view class="secret-btn" bindtap="toggleSecret">
-          <text>{{secretBtnText}}</text>
+      </view>
+
+      <view class="field-group">
+        <text class="form-label">平台</text>
+        <picker mode="selector" range="{{platformLabels}}" value="{{platformIndex}}" bindchange="onPlatformChange">
+          <view class="form-picker">
+            <text class="picker-value">{{platformLabel}}</text>
+            <text class="picker-arrow">⌄</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="field-group">
+        <text class="form-label">凭证类型</text>
+        <picker mode="selector" range="{{availableAuthTypeLabels}}" value="{{authTypeIndex}}" bindchange="onAuthTypeChange">
+          <view class="form-picker">
+            <text class="picker-value">{{authTypeLabel}}</text>
+            <text class="picker-arrow">⌄</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="field-group" wx:if="{{showTokenField}}">
+        <text class="form-label">Access Token</text>
+        <view class="secure-input">
+          <input
+            class="form-input form-input--secure"
+            placeholder="粘贴你的 Access Token"
+            placeholder-class="form-placeholder"
+            value="{{token}}"
+            password="{{!showSecret}}"
+            bindinput="onTokenInput"
+          />
+          <view class="secret-btn" bindtap="toggleSecret">
+            <text>{{secretBtnText}}</text>
+          </view>
+        </view>
+        <text class="field-tip">令牌仅保存在本地设备，建议使用最小权限范围。</text>
+      </view>
+
+      <block wx:if="{{showUserPassFields}}">
+        <view class="section-divider"></view>
+
+        <view class="field-group">
+          <text class="form-label">用户名</text>
+          <input
+            class="form-input"
+            placeholder="Git 用户名"
+            placeholder-class="form-placeholder"
+            value="{{username}}"
+            bindinput="onUsernameInput"
+          />
+        </view>
+
+        <view class="field-group">
+          <text class="form-label">密码</text>
+          <view class="secure-input">
+            <input
+              class="form-input form-input--secure"
+              placeholder="密码 / 个人访问令牌"
+              placeholder-class="form-placeholder"
+              value="{{password}}"
+              password="{{!showSecret}}"
+              bindinput="onPasswordInput"
+            />
+            <view class="secret-btn" bindtap="toggleSecret">
+              <text>{{secretBtnText}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <view class="field-group" wx:if="{{showBaseUrlField}}">
+        <text class="form-label">服务器地址</text>
+        <input
+          class="form-input"
+          placeholder="https://gitlab.example.com"
+          placeholder-class="form-placeholder"
+          value="{{baseUrl}}"
+          bindinput="onBaseUrlInput"
+        />
+        <text class="field-tip">私有部署 GitLab 需要填写完整服务器地址。</text>
+      </view>
+
+      <view class="security-card">
+        <view class="security-icon">
+          <text>i</text>
+        </view>
+        <text class="security-text">凭证仅加密保存在当前设备，本应用不会上传你的敏感信息。</text>
+      </view>
+
+      <view class="test-result test-success" wx:if="{{isSuccess}}">
+        <text class="test-icon">OK</text>
+        <view class="test-copy">
+          <text class="test-msg">{{testMessage}}</text>
+          <text class="test-user" wx:if="{{testUsername}}">{{testUsername}}</text>
+        </view>
+      </view>
+
+      <view class="test-result test-fail" wx:if="{{isFail}}">
+        <text class="test-icon">NO</text>
+        <view class="test-copy">
+          <text class="test-msg">{{testMessage}}</text>
         </view>
       </view>
     </view>
-  </block>
 
-  <view class="form-section" wx:if="{{showBaseUrlField}}">
-    <text class="form-label">服务器地址</text>
-    <input
-      class="form-input"
-      placeholder="https://gitlab.example.com"
-      value="{{baseUrl}}"
-      bindinput="onBaseUrlInput"
-    />
-    <view class="form-tip">
-      <text>私有部署的 GitLab 需要填写服务器地址</text>
-    </view>
-  </view>
-
-  <view class="test-section">
-    <view class="test-btn {{testBtnClass}}" bindtap="onTest">
-      <text wx:if="{{isTesting}}">连接中...</text>
-      <text wx:else>测试连接</text>
-    </view>
-
-    <view class="test-result" wx:if="{{isSuccess || isFail}}">
-      <view class="test-success" wx:if="{{isSuccess}}">
-        <text class="test-icon">✓</text>
-        <text class="test-msg">{{testMessage}}</text>
-        <text class="test-user" wx:if="{{testUsername}}">（{{testUsername}}）</text>
+    <view class="action-section">
+      <view class="test-btn {{testBtnClass}}" bindtap="onTest">
+        <text wx:if="{{isTesting}}">连接中...</text>
+        <text wx:else>测试连接</text>
       </view>
-      <view class="test-fail" wx:if="{{isFail}}">
-        <text class="test-icon">✗</text>
-        <text class="test-msg">{{testMessage}}</text>
+
+      <view class="save-btn {{saveBtnClass}}" bindtap="onSave">
+        <text>{{saveBtnText}}</text>
       </view>
     </view>
   </view>
-
-  <!-- 保存按钮 -->
-  <view class="save-btn {{saveBtnClass}}" bindtap="onSave">
-    <text>{{saveBtnText}}</text>
-  </view>
-
-  <view class="form-tip">
-    <text>凭证仅存储在本地设备上，不会上传到服务器。</text>
-  </view>
-
 </view>
