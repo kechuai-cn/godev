@@ -1,5 +1,5 @@
 {
-  "pages": ["pages/home/page", "pages/git/home/page", "pages/git/credential/page", "pages/git/credential-edit/page"],
+  "pages": ["pages/home/page", "pages/git/home/page", "pages/git/credential/page", "pages/git/credential-edit/page", "pages/validator/home/page", "pages/validator/edit/page"],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ffffff",

@@ -1,0 +1,252 @@
+/* pages/validator/home/page.wxss */
+.container {
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+.page-shell {
+  padding: 24rpx 24rpx 160rpx;
+}
+
+/* 顶部模块信息 */
+.module-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 8rpx 8rpx 24rpx;
+}
+
+.module-icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.module-icon-char {
+  font-size: 44rpx;
+}
+
+.module-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.module-title {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.module-subtitle {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+}
+
+/* 列表 */
+.token-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.token-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 28rpx;
+}
+
+.token-top {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.token-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.token-avatar text {
+  font-size: 32rpx;
+  font-weight: 800;
+  color: #fff;
+}
+
+.token-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.token-issuer {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.token-account {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+}
+
+.token-copy {
+  flex-shrink: 0;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: var(--color-primary-light);
+}
+
+.token-copy text {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.token-code {
+  margin: 24rpx 0 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64rpx;
+  font-weight: 700;
+  letter-spacing: 8rpx;
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.code-seg {
+  font-family: 'Courier New', monospace;
+}
+
+.code-space {
+  width: 24rpx;
+}
+
+.token-bottom {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.progress-track {
+  flex: 1;
+  height: 8rpx;
+  border-radius: 999rpx;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 999rpx;
+  transition: width 1s linear;
+}
+
+.remain-text {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  width: 48rpx;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.token-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 22rpx;
+}
+
+.token-action {
+  flex: 1;
+  min-height: 64rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+}
+
+.token-action text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.token-action--danger text {
+  color: var(--color-error);
+}
+
+/* 空状态 */
+.empty-state {
+  margin-top: 120rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 40rpx;
+}
+
+.empty-icon {
+  min-width: 120rpx;
+  height: 120rpx;
+  padding: 0 30rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 30rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  margin-bottom: 26rpx;
+}
+
+.empty-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* 添加按钮 */
+.add-btn {
+  position: fixed;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: 40rpx;
+  min-height: 92rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  background: var(--color-primary);
+  box-shadow: 0 12rpx 28rpx rgba(26, 115, 232, 0.28);
+}
+
+.add-btn-icon,
+.add-btn-text {
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 700;
+}

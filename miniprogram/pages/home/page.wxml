@@ -5,11 +5,8 @@
       <view class="card-icon"><text class="icon-char">⑂</text></view>
       <text class="card-title">Git 仓库</text>
     </navigator>
-    <navigator class="feature-card">
-      <view class="badge">
-        <text>即将上线</text>
-      </view>
-      <view class="card-icon"><text class="icon-char">🔐</text></view>
+    <navigator class="feature-card" url="/pages/validator/home/page">
+      <view class="card-icon" style="background:#e8f0fe;"><text class="icon-char" style="color:#1a73e8;">🔐</text></view>
       <text class="card-title">验证器</text>
     </navigator>
     <navigator class="feature-card">

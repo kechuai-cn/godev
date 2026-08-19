@@ -1,0 +1,75 @@
+<!-- pages/validator/home/page.wxml -->
+<view class="container">
+  <view class="page-shell">
+    <view class="module-header">
+      <view class="module-icon" style="background:{{themeLight}};">
+        <text class="module-icon-char" style="color:{{themeColor}};">🔐</text>
+      </view>
+      <view class="module-text">
+        <text class="module-title">验证器</text>
+        <text class="module-subtitle">动态验证码 · TOTP</text>
+      </view>
+    </view>
+
+    <view class="token-list" wx:if="{{!isEmpty}}">
+      <view
+        class="token-card"
+        wx:for="{{items}}"
+        wx:key="id"
+      >
+        <view class="token-top">
+          <view class="token-avatar" style="background:{{themeColor}};">
+            <text>{{item.initials}}</text>
+          </view>
+          <view class="token-meta">
+            <text class="token-issuer text-ellipsis">{{item.issuer}}</text>
+            <text class="token-account text-ellipsis">{{item.account}}</text>
+          </view>
+          <view
+            class="token-copy"
+            data-item="{{item}}"
+            bindtap="onCopy"
+          >
+            <text>复制</text>
+          </view>
+        </view>
+
+        <view class="token-code" bindtap="onCopy" data-item="{{item}}">
+          <text class="code-seg">{{item.codeFirst}}</text>
+          <text class="code-space"> </text>
+          <text class="code-seg">{{item.codeLast}}</text>
+        </view>
+
+        <view class="token-bottom">
+          <view class="progress-track">
+            <view
+              class="progress-bar"
+              style="width:{{item.remainRatio * 100}}%;background:{{item.remainSeconds <= 5 ? '#ea4335' : themeColor}};"
+            ></view>
+          </view>
+          <text class="remain-text">{{item.remainSeconds}}s</text>
+        </view>
+
+        <view class="token-actions">
+          <view class="token-action" data-id="{{item.id}}" bindtap="onEdit">
+            <text>编辑</text>
+          </view>
+          <view class="token-action token-action--danger" data-id="{{item.id}}" bindtap="onDelete">
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:else>
+      <view class="empty-icon">2FA</view>
+      <text class="empty-title">还没有验证器条目</text>
+      <text class="empty-desc">添加基于 TOTP 的动态验证码（如 Google Authenticator），即可在此集中查看与复制。</text>
+    </view>
+
+    <view class="add-btn" bindtap="onAdd">
+      <text class="add-btn-icon">＋</text>
+      <text class="add-btn-text">添加验证器</text>
+    </view>
+  </view>
+</view>

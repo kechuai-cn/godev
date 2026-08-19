@@ -1,0 +1,82 @@
+<!-- pages/validator/edit/page.wxml -->
+<view class="container">
+  <view class="page-shell">
+    <view class="form-card">
+      <view class="form-row">
+        <text class="form-label">发行方</text>
+        <input
+          class="form-input"
+          placeholder="如 GitHub、Google"
+          placeholder-class="form-placeholder"
+          value="{{form.issuer}}"
+          bindinput="onIssuerInput"
+        />
+      </view>
+
+      <view class="form-row">
+        <text class="form-label">账号</text>
+        <input
+          class="form-input"
+          placeholder="邮箱或用户名"
+          placeholder-class="form-placeholder"
+          value="{{form.account}}"
+          bindinput="onAccountInput"
+        />
+      </view>
+
+      <view class="form-divider"></view>
+
+      <view class="form-row form-row--secret">
+        <text class="form-label">密钥</text>
+        <view class="secret-wrap">
+          <input
+            class="form-input"
+            placeholder="Base32 密钥"
+            placeholder-class="form-placeholder"
+            value="{{form.secret}}"
+            bindinput="onSecretInput"
+          />
+          <view class="scan-btn" bindtap="onScan">
+            <text>扫码</text>
+          </view>
+        </view>
+      </view>
+      <text class="form-error" wx:if="{{secretError}}">{{secretError}}</text>
+
+      <view class="form-hint">
+        <text>支持粘贴 otpauth:// 链接，或直接扫码识别。密钥仅保存在本机，不会上传。</text>
+      </view>
+
+      <view class="form-divider"></view>
+
+      <view class="form-row">
+        <text class="form-label">位数</text>
+        <input
+          class="form-input form-input--num"
+          type="number"
+          value="{{form.digits}}"
+          bindinput="onDigitsInput"
+        />
+      </view>
+
+      <view class="form-row">
+        <text class="form-label">周期(秒)</text>
+        <input
+          class="form-input form-input--num"
+          type="number"
+          value="{{form.period}}"
+          bindinput="onPeriodInput"
+        />
+      </view>
+    </view>
+
+    <view class="preview-card">
+      <text class="preview-label">当前验证码预览</text>
+      <text class="preview-code">{{previewCode}}</text>
+    </view>
+
+    <view class="save-btn" bindtap="onSave">
+      <text>{{isEdit ? '保存修改' : '添加验证器'}}</text>
+    </view>
+  </view>
+</view>
